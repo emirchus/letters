@@ -8,6 +8,7 @@ type EditorContextProviderProps = {
   children: React.ReactNode;
   text?: string | undefined;
   chords?: { [key: number]: Chord | "" };
+  songTitle?: string | undefined;
 };
 
 type EditorContextType = {
@@ -17,6 +18,8 @@ type EditorContextType = {
   setChords: (chords: { [key: number]: Chord | "" }) => void;
   setChord: (index: number, chord: Chord | "") => void;
   textareaRef: React.RefObject<HTMLTextAreaElement>;
+  songTitle?: string | undefined;
+  setSongTitle: (songTitle: string) => void;
 };
 
 const EditorContext = createContext({} as EditorContextType);
@@ -35,8 +38,10 @@ export const EditorContextProvider = ({
   children,
   chords: initialChords = {},
   text: initialText = "",
+  songTitle: initialSongTitle,
 }: EditorContextProviderProps) => {
   const [text, setText] = useState<string>(initialText);
+  const [songTitle, setSongTitle] = useState<string | undefined>(initialSongTitle);
   const [chords, setChords] = useState<{ [key: number]: Chord | "" }>(initialChords);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -51,6 +56,8 @@ export const EditorContextProvider = ({
           setChords({ ...chords, [index]: chord });
         },
         textareaRef,
+        songTitle,
+        setSongTitle,
       }}
     >
       {children}

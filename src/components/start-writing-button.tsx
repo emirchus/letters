@@ -11,7 +11,7 @@ export async function StartWritingButton() {
 
   const { data } = await supabase.auth.getUser();
 
-  const url = data.user?.id ? `/letters/${data.user.id}` : "/login";
+  const url = data.user ? `/letters/` : "/login";
 
   return (
     <Button asChild>

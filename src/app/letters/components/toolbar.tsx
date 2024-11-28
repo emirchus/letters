@@ -50,77 +50,25 @@ const ITEMS = [
     id: 1,
     label: "User",
     title: <User className="h-5 w-5" />,
-    content: (
-      <div className="flex flex-col space-y-4">
-        <div className="flex flex-col space-y-1 text-zinc-700">
-          <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-400" />
-          <span>Ibelick</span>
-        </div>
-        <button
-          className="relative h-8 w-full scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98]"
-          type="button"
-        >
-          Edit Profile
-        </button>
-      </div>
-    ),
+    content: <div className="flex flex-col space-y-4"></div>,
   },
   {
     id: 2,
     label: "Messages",
     title: <MessageCircle className="h-5 w-5" />,
-    content: (
-      <div className="flex flex-col space-y-4">
-        <div className="text-zinc-700">You have 3 new messages.</div>
-        <button
-          className="relative h-8 w-full scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98]"
-          type="button"
-        >
-          View more
-        </button>
-      </div>
-    ),
+    content: <div className="flex flex-col space-y-4"></div>,
   },
   {
     id: 3,
     label: "Documents",
     title: <Folder className="h-5 w-5" />,
-    content: (
-      <div className="flex flex-col space-y-4">
-        <div className="flex flex-col text-zinc-700">
-          <div className="space-y-1">
-            <div>Project_Proposal.pdf</div>
-            <div>Meeting_Notes.docx</div>
-            <div>Financial_Report.xls</div>
-          </div>
-        </div>
-        <button
-          className="relative h-8 w-full scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98]"
-          type="button"
-        >
-          Manage documents
-        </button>
-      </div>
-    ),
+    content: <div className="flex flex-col space-y-4"></div>,
   },
   {
     id: 4,
     label: "Wallet",
     title: <WalletCards className="h-5 w-5" />,
-    content: (
-      <div className="flex flex-col space-y-4">
-        <div className="flex flex-col text-zinc-700">
-          <span>Current Balance</span>
-          <span>$1,250.32</span>
-        </div>
-        <button
-          className="relative h-8 w-full scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98]"
-          type="button"
-        >
-          View Transactions
-        </button>
-      </div>
-    ),
+    content: <div className="flex flex-col space-y-4"></div>,
   },
 ];
 
@@ -148,7 +96,7 @@ export default function ToolbarExpandable() {
 
   return (
     <MotionConfig transition={transition}>
-      <div ref={ref} className="fixed bottom-8 left-1/2 -translate-x-1/2 transform">
+      <div ref={ref} className="fixed bottom-8 left-1/2 z-50 -translate-x-1/2 transform">
         <div className="h-full w-full rounded-xl border border-sidebar-border bg-sidebar">
           <div className="overflow-hidden">
             <AnimatePresence initial={false} mode="sync">

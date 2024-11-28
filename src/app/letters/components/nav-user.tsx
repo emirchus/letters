@@ -1,7 +1,9 @@
 "use client";
 
 import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react";
+import { useTransition } from "react";
 
+import { signOutAction } from "@/app/supabase/actions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -13,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
+import { Spinner } from "@/components/ui/spinner";
 
 export function NavUser({
   user,
@@ -24,6 +27,8 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+
+  const [isLoggingOut, startLoggingOut] = useTransition();
 
   return (
     <SidebarMenu>
@@ -86,8 +91,14 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut />
+            <DropdownMenuItem
+              onSelect={() => {
+                startLoggingOut(() => {
+                  signOutAction();
+                });
+              }}
+            >
+              {isLoggingOut ? <Spinner /> : <LogOut />}
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
