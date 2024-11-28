@@ -5,8 +5,8 @@ import { ArrowLeftIcon } from "lucide-react";
 import { LegacyRef, memo, useEffect, useId, useRef, useState } from "react";
 
 import useClickOutside from "@/hooks/use-click-outside";
-import { ChordSelector } from "./chord-selector";
 import { Chord } from "@/interface/chord";
+import { ChordSelector } from "./chord-selector";
 
 const TRANSITION = {
   type: "spring",
@@ -17,10 +17,11 @@ const TRANSITION = {
 interface Props {
   chord: Chord | React.ReactNode;
   onRemove: () => void;
-  onSelectChord: (chord: Chord) => void;
+  onSelectChordAction: (chord: Chord) => void;
+  readonly?: boolean;
 }
 
-export function ChordMarker({ chord, onSelectChord }: Props) {
+export function ChordMarker({ chord, onSelectChordAction, readonly }: Props) {
   const uniqueId = useId();
   const formContainerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +65,7 @@ export function ChordMarker({ chord, onSelectChord }: Props) {
             borderRadius: 8,
             pointerEvents: "auto",
           }}
-          onClick={openMenu}
+          onClick={readonly ? undefined : openMenu}
         >
           {chord}
         </motion.button>
@@ -76,7 +77,7 @@ export function ChordMarker({ chord, onSelectChord }: Props) {
               uniqueId={uniqueId}
               closeMenu={closeMenu}
               note={note}
-              onSelectChord={onSelectChord}
+              onSelectChord={onSelectChordAction}
             />
           )}
         </AnimatePresence>

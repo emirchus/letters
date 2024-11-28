@@ -1,15 +1,22 @@
 "use client";
 
-import * as React from "react";
+import { useCallback, useEffect } from "react";
 
+import { cn } from "@/lib/utils";
 import { useEditor } from "@/provider/editor-provider";
 import { ChordMarker } from "./chord-marker";
 
-export function ChordEditor() {
+interface Props {
+  readonly?: boolean;
+  className?: string;
+}
+
+export function ChordEditor({ readonly = false, className }: Props) {
   const { text, setText, textareaRef, chords, setChord } = useEditor();
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value.replace(/\r\n?/g, "\n");
+
     setText(newText);
   };
 
@@ -18,6 +25,7 @@ export function ChordEditor() {
       e.preventDefault();
       const { selectionStart, selectionEnd } = e.currentTarget;
       const newText = `${text.slice(0, selectionStart)}\t${text.slice(selectionEnd)}`;
+
       setText(newText);
       e.currentTarget.setSelectionRange(selectionStart + 1, selectionStart + 1);
     }
@@ -69,18 +77,18 @@ export function ChordEditor() {
 
         for (let i = 0; i < numMarkers; i++) {
           const absoluteIndex = lineStart + charCount + word.length + i;
-          console.log(absoluteIndex);
 
           wordMarkers.push(
             <ChordMarker
               key={`market-${lineIndex}-${wordIndex}-${i}-${absoluteIndex}`}
+              readonly={readonly}
               chord={
                 chords[absoluteIndex] || (
-                  <div className="mx-auto aspect-square h-[10px] w-[10px] rounded-full bg-border"></div>
+                  <div className="mx-auto aspect-square h-[10px] w-[10px] rounded-full bg-border" />
                 )
               }
               onRemove={() => {}}
-              onSelectChord={chord => {
+              onSelectChordAction={chord => {
                 setChord(absoluteIndex, chord);
               }}
             />
@@ -109,34 +117,39 @@ export function ChordEditor() {
     return markers;
   };
 
-  const adjustTextareaHeight = () => {
+  const adjustTextareaHeight = useCallback(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  };
+  }, [textareaRef]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     adjustTextareaHeight();
-  }, [text]);
+  }, [adjustTextareaHeight, text]);
 
   return (
     <div className="relative h-full w-full font-mono text-base">
       <div className="pointer-events-none absolute z-10 space-y-[1.5rem]">
         {text.split("\n").map((line, lineIndex) => (
-          <div key={lineIndex} className="group relative">
+          <div key={lineIndex} className={cn("group relative", readonly && "pointer-events-none")}>
             {renderChordMarkers(line, lineIndex)}
             <div className="pointer-events-none whitespace-pre-wrap break-words opacity-0">{"\u00A0"}</div>
           </div>
         ))}
       </div>
       <textarea
+        placeholder="Write your lyrics here..."
         ref={textareaRef}
+        aria-label="Editor de letras y acordes"
+        className={cn(
+          "inset-0 h-full w-full resize-none appearance-none bg-transparent font-mono text-base leading-[3rem] outline-none",
+          className
+        )}
         value={text}
         onChange={handleTextChange}
         onKeyDown={handleOnKeyDown}
-        className="inset-0 h-full w-full resize-none appearance-none bg-transparent font-mono text-base leading-[3rem] outline-none"
-        aria-label="Editor de letras y acordes"
+        readOnly={readonly}
       />
     </div>
   );

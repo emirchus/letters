@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { SupabaseContextProvider } from '@emirchus/use-supabase';
-import React from 'react';
+import { SupabaseContextProvider } from "@emirchus/use-supabase";
+import React from "react";
 
-import { supabase } from '@/lib/supabase/client';
+import { supabase } from "@/lib/supabase/client";
 
 interface SupabaseClientProviderProps {
   children: React.ReactNode;

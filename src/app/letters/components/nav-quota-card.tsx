@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { SidebarInput } from "@/components/ui/sidebar";
-import { Progress } from "./ui/progress";
+import { Progress } from "@/components/ui/progress";
 
 export function NavQuotaCard() {
   return (

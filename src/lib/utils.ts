@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 import type { ClassValue } from "clsx";
@@ -15,6 +15,13 @@ export function cn(...inputs: ClassValue[]) {
  * @param {string} message - The message to be encoded and added as a query parameter.
  * @returns {never} This function doesn't return as it triggers a redirect.
  */
-export function encodedRedirect(type: "error" | "success", path: string, message: string): never {
-  return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
+export function encodedRedirect(
+  type: "error" | "success",
+  path: string,
+  message: string,
+  options?: {
+    type?: RedirectType;
+  }
+): never {
+  return redirect(`${path}?${type}=${encodeURIComponent(message)}`, options?.type);
 }

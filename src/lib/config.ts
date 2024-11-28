@@ -1,4 +1,4 @@
-import { Geist as Font, Geist_Mono as FontMono, Poppins as FontHeading } from "next/font/google";
+import { Funnel_Sans as Font, Poppins as FontHeading, Source_Code_Pro as FontMono } from "next/font/google";
 
 export const fontHeading = FontHeading({
   subsets: ["latin"],
@@ -30,6 +30,5 @@ export const siteConfig = {
     github: "https://github.com/emirchus",
   },
 };
-
 
 export type SiteConfig = typeof siteConfig;

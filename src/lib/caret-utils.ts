@@ -1,6 +1,6 @@
 "use client";
 
-const getCaretCoordinates = (fromStart = true) => {
+export const getCaretCoordinates = (fromStart = true) => {
   let x, y;
   const isSupported = typeof window !== "undefined" && typeof window.getSelection !== "undefined";
   if (isSupported) {
@@ -33,9 +33,11 @@ export const getSelection = (element: HTMLElement) => {
   return { selectionStart, selectionEnd };
 };
 
-export const setCaretToEnd = (element: Node & {
-  focus: () => void;
-}) => {
+export const setCaretToEnd = (
+  element: Node & {
+    focus: () => void;
+  }
+) => {
   const isSupported = typeof window !== "undefined" && typeof window.getSelection !== "undefined";
   if (!isSupported) return;
   const range = document.createRange();

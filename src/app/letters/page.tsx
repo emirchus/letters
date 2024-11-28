@@ -1,6 +1,6 @@
-import { TextChordViewer } from "@/components/text-chord-viewer";
-import { ChordEditor } from "@/components/text-editor";
-import ToolbarExpandable from "@/components/toolbar";
+import { TextChordViewer } from "@/app/letters/components/text-chord-viewer";
+import { ChordEditor } from "@/app/letters/components/text-editor";
+import ToolbarExpandable from "@/app/letters/components/toolbar";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { EditorContextProvider } from "@/provider/editor-provider";

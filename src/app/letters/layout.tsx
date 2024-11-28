@@ -1,6 +1,5 @@
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/app/letters/components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { EditorContextProvider } from "@/provider/editor-provider";
 
 export default async function LoggedLayout({ children }: { children: React.ReactNode }) {
   return (

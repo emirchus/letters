@@ -31,7 +31,7 @@ export const updateSession = async (request: NextRequest) => {
     );
     const user = await supabase.auth.getUser();
 
-    const protectedRoutes: `/${string}`[] = [];
+    const protectedRoutes: `/${string}`[] = ["/letters"];
 
     if (protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route)) && user.error) {
       return NextResponse.redirect(new URL("/", request.url));
