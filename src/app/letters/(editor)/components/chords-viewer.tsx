@@ -9,7 +9,7 @@ interface Props {
 }
 const ChordsViewer = ({ chords }: Props) => {
   return (
-    <div className="fixed right-20 top-[10%]">
+    <div className="fixed right-20 top-[10%] z-20">
       <Card className="shadow-md">
         <CardHeader>
           <CardTitle>Chords</CardTitle>

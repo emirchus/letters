@@ -11,7 +11,7 @@ export const getSong = async (id: string) => {
   const { data: user, error } = await supabase.auth.getUser();
 
   if (error || !user) {
-    return [];
+    return null;
   }
 
   return unstable_cache(

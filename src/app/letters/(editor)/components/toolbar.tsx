@@ -1,14 +1,18 @@
 "use client";
 
+import { FloppyDisk, MagnifyingGlass, Metronome, MusicNote, NotePencil } from "@phosphor-icons/react";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
-import { ArrowLeft, Folder, MessageCircle, Search, User, WalletCards } from "lucide-react";
+import { ArrowLeft, Redo, Undo } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import useMeasure from "react-use-measure";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import useClickOutside from "@/hooks/use-click-outside";
 import { cn } from "@/lib/utils";
-import { Input } from "../../../../components/ui/input";
-import { Separator } from "../../../../components/ui/separator";
 
 const transition = {
   type: "spring",
@@ -16,7 +20,7 @@ const transition = {
   duration: 0.25,
 };
 
-function Button({
+function ItemButton({
   children,
   onClick,
   disabled,
@@ -47,32 +51,72 @@ function Button({
 
 const ITEMS = [
   {
-    id: 1,
-    label: "User",
-    title: <User className="h-5 w-5" />,
+    id: 3,
+    label: "Save",
+    title: <FloppyDisk className="h-5 w-5" />,
     content: <div className="flex flex-col space-y-4"></div>,
+  },
+  {
+    id: 1,
+    label: "Text",
+    title: <NotePencil className="h-5 w-5" />,
+    content: (
+      <div className="flex flex-row items-center justify-center space-x-4">
+        <Button variant="ghost">
+          <Undo className="h-5 w-5" />
+          Undo
+        </Button>
+        <Button variant="ghost">
+          <Redo className="h-5 w-5" />
+          Redo
+        </Button>
+      </div>
+    ),
   },
   {
     id: 2,
-    label: "Messages",
-    title: <MessageCircle className="h-5 w-5" />,
+    label: "Music",
+    title: <MusicNote className="h-5 w-5" />,
     content: <div className="flex flex-col space-y-4"></div>,
   },
-  {
-    id: 3,
-    label: "Documents",
-    title: <Folder className="h-5 w-5" />,
-    content: <div className="flex flex-col space-y-4"></div>,
-  },
+
   {
     id: 4,
-    label: "Wallet",
-    title: <WalletCards className="h-5 w-5" />,
-    content: <div className="flex flex-col space-y-4"></div>,
+    label: "Metronome",
+    title: <Metronome className="h-5 w-5" />,
+    content: (
+      <div className="flex flex-col space-y-4">
+        <h4 className="text-sm font-medium">Metronome</h4>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="bpm" className="text-right">
+            BPM
+          </Label>
+          <Input
+            id="bpm"
+            type="number"
+            // onChange={e => setBpm(Number(e.target.value))}
+            className="col-span-3"
+          />
+        </div>
+        <Button>Start</Button>
+      </div>
+    ),
   },
 ];
 
-export default function ToolbarExpandable() {
+export function ToolbarPortal() {
+  const [docEnv, setDocEnv] = useState(false);
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      setDocEnv(true);
+    }
+  }, []);
+
+  return docEnv ? createPortal(<ToolbarExpandable />, document.getElementById("editor-content")!) : null;
+}
+
+export function ToolbarExpandable() {
   const [active, setActive] = useState<number | null>(null);
   const [contentRef, { height: heightContent }] = useMeasure();
   const [menuRef, { width: widthContainer }] = useMeasure();
@@ -96,7 +140,12 @@ export default function ToolbarExpandable() {
 
   return (
     <MotionConfig transition={transition}>
-      <div ref={ref} className="fixed bottom-8 left-1/2 z-50 -translate-x-1/2 transform">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 10, x: "-50%" }}
+        animate={{ opacity: 1, y: 0, x: "-50%" }}
+        className="absolute bottom-3 left-1/2 z-50 -translate-x-1/2 transform will-change-transform"
+      >
         <div className="h-full w-full rounded-xl border border-sidebar-border bg-sidebar">
           <div className="overflow-hidden">
             <AnimatePresence initial={false} mode="sync">
@@ -133,7 +182,7 @@ export default function ToolbarExpandable() {
           </div>
           <div ref={menuRef} className="flex space-x-2 p-2">
             {ITEMS.map(item => (
-              <Button
+              <ItemButton
                 key={item.id}
                 active={active === item.id}
                 ariaLabel={item.label}
@@ -149,8 +198,8 @@ export default function ToolbarExpandable() {
                   setActive(item.id);
                 }}
               >
-                <div className="group-hover:scale-110">{item.title}</div>
-              </Button>
+                <div>{item.title}</div>
+              </ItemButton>
             ))}
             <Separator className="my-auto h-4" orientation="vertical" />
             <motion.div
@@ -160,7 +209,7 @@ export default function ToolbarExpandable() {
               initial={false}
             >
               {!isSearching ? (
-                <Button
+                <ItemButton
                   active={false}
                   ariaLabel="Search notes"
                   onClick={() => {
@@ -169,13 +218,13 @@ export default function ToolbarExpandable() {
                     setActive(null);
                   }}
                 >
-                  <Search className="h-5 w-5" />
-                </Button>
+                  <MagnifyingGlass className="h-4 w-4" />
+                </ItemButton>
               ) : (
                 <div className="flex space-x-2">
-                  <Button active={false} ariaLabel="Back" onClick={() => setIsSearching(false)}>
-                    <ArrowLeft className="h-5 w-5" />
-                  </Button>
+                  <ItemButton active={false} ariaLabel="Back" onClick={() => setIsSearching(false)}>
+                    <ArrowLeft className="h-4 w-4" />
+                  </ItemButton>
                   <div className="relative w-full">
                     <Input
                       autoFocus
@@ -189,7 +238,7 @@ export default function ToolbarExpandable() {
             </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </MotionConfig>
   );
 }

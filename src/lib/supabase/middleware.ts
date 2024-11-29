@@ -57,7 +57,7 @@ export const updateSession = async (request: NextRequest) => {
 
     if (
       (request.nextUrl.pathname.startsWith("/login") || request.nextUrl.pathname.startsWith("/signup")) &&
-      user.data
+      user.data.user
     ) {
       return NextResponse.redirect(new URL("/letters", request.url));
     }
