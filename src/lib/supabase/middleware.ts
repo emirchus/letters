@@ -31,10 +31,35 @@ export const updateSession = async (request: NextRequest) => {
     );
     const user = await supabase.auth.getUser();
 
+    const onboardingCompleted = user.data.user?.user_metadata?.onboarding_completed;
+
     const protectedRoutes: `/${string}`[] = ["/letters"];
+
+    const onboardingRoute = "/letters/onboarding";
+
+    if (
+      !onboardingCompleted &&
+      request.nextUrl.pathname !== onboardingRoute &&
+      protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
+    ) {
+      return NextResponse.redirect(new URL("/letters/onboarding", request.url));
+    } else if (
+      onboardingCompleted &&
+      request.nextUrl.pathname === onboardingRoute &&
+      protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
+    ) {
+      return NextResponse.redirect(new URL("/letters", request.url));
+    }
 
     if (protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route)) && user.error) {
       return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    if (
+      (request.nextUrl.pathname.startsWith("/login") || request.nextUrl.pathname.startsWith("/signup")) &&
+      user.data
+    ) {
+      return NextResponse.redirect(new URL("/letters", request.url));
     }
 
     return response;

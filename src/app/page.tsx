@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-import { ChordEditor } from "@/app/letters/components/text-editor";
+import { ChordEditor } from "@/app/letters/(editor)/components/text-editor";
 import { AppSection } from "@/components/app-section";
 import { StartWritingButton } from "@/components/start-writing-button";
 import { Button } from "@/components/ui/button";

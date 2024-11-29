@@ -1,6 +1,8 @@
-import { TextChordViewer } from "@/app/letters/components/text-chord-viewer";
-import { ChordEditor } from "@/app/letters/components/text-editor";
-import ToolbarExpandable from "@/app/letters/components/toolbar";
+import { Suspense } from "react";
+
+import { TextChordViewer } from "@/app/letters/(editor)/components/text-chord-viewer";
+import { ChordEditor } from "@/app/letters/(editor)/components/text-editor";
+import ToolbarExpandable from "@/app/letters/(editor)/components/toolbar";
 import { getSong } from "@/app/supabase/get-song";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -32,7 +34,9 @@ export default async function HomePage({ params }: { params: Promise<{ letterId:
 
         <div className="relative flex w-[calc(100vw-var(--sidebar-width))] flex-row p-4">
           <ChordEditor />
-          <TextChordViewer />
+          <Suspense>
+            <TextChordViewer />
+          </Suspense>
           <ToolbarExpandable />
         </div>
       </div>

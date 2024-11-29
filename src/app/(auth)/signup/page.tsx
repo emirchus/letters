@@ -3,12 +3,12 @@
 import { Link } from "next-view-transitions";
 import { useTransition } from "react";
 
+import { signUpWithEmail } from "@/app/supabase/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
-import { signUpWithEmail } from "../supabase/actions";
 
 export default function LoginPage() {
   const [isSignin, startTransition] = useTransition();

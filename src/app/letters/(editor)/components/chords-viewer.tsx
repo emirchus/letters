@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Chord } from "@/interface/chord";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../../components/ui/card";
 import { ChordDiagram } from "./chord-diagram";
 
 interface Props {

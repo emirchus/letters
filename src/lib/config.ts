@@ -1,4 +1,4 @@
-import { Funnel_Sans as Font, Poppins as FontHeading, Source_Code_Pro as FontMono } from "next/font/google";
+import { Lexend as Font, Outfit as FontHeading, Source_Code_Pro as FontMono } from "next/font/google";
 
 export const fontHeading = FontHeading({
   subsets: ["latin"],

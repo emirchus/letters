@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 
-import { TextChordViewer } from "@/app/letters/components/text-chord-viewer";
-import { ChordEditor } from "@/app/letters/components/text-editor";
-import ToolbarExpandable from "@/app/letters/components/toolbar";
+import { TextChordViewer } from "@/app/letters/(editor)/components/text-chord-viewer";
+import { ChordEditor } from "@/app/letters/(editor)/components/text-editor";
+import ToolbarExpandable from "@/app/letters/(editor)/components/toolbar";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { EditorContextProvider } from "@/provider/editor-provider";
