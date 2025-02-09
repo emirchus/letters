@@ -33,11 +33,7 @@ export const getSelection = (element: HTMLElement) => {
   return { selectionStart, selectionEnd };
 };
 
-export const setCaretToEnd = (
-  element: Node & {
-    focus: () => void;
-  }
-) => {
+export const setCaretToEnd = (element: HTMLElement) => {
   const isSupported = typeof window !== "undefined" && typeof window.getSelection !== "undefined";
   if (!isSupported) return;
   const range = document.createRange();

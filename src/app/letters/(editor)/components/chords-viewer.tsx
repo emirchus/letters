@@ -1,7 +1,8 @@
 import React from "react";
 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Chord } from "@/interface/chord";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../../components/ui/card";
+import { cn } from "@/lib/utils";
 import { ChordDiagram } from "./chord-diagram";
 
 interface Props {
@@ -9,14 +10,19 @@ interface Props {
 }
 const ChordsViewer = ({ chords }: Props) => {
   return (
-    <div className="fixed right-20 top-[10%] z-20">
-      <Card className="shadow-md">
+    <div className={cn("w-full", "", "lg:fixed lg:right-20 lg:top-[10%] lg:z-20 lg:w-auto")}>
+      <Card className="w-full lg:shadow-md">
         <CardHeader>
           <CardTitle>Chords</CardTitle>
           <CardDescription>A resume of your chords.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid max-h-[45vh] grid-flow-row grid-cols-2 gap-4 overflow-auto">
+          <div
+            className={cn(
+              "grid max-h-[45vh] w-full grid-flow-col grid-rows-1 gap-4 overflow-auto",
+              "lg:grid-flow-row lg:grid-cols-2"
+            )}
+          >
             {chords.map(chord => (
               <ChordDiagram key={chord} chordName={chord} />
             ))}

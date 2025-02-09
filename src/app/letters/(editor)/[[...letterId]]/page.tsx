@@ -35,13 +35,13 @@ export default async function HomePage({ params }: Props) {
           <Separator orientation="vertical" className="h-4" />
           {new Date().toLocaleDateString("es")}
         </header>
-        <SongTitle className="w-[calc(100vw-var(--sidebar-width))] group-data-[state=collapsed]/wrapper:w-screen" />
+        <SongTitle className="w-screen md:w-[calc(100vw-var(--sidebar-width))] md:group-data-[state=collapsed]/wrapper:w-screen" />
 
-        <div className="relative flex w-[calc(100vw-var(--sidebar-width)-370px)] flex-row p-4 group-data-[state=collapsed]/wrapper:w-[calc(100vw-370px)]">
-          <ChordEditor />
+        <div className="relative flex w-screen flex-col space-y-4 p-4 md:w-[calc(100vw-var(--sidebar-width))] md:group-data-[state=collapsed]/wrapper:w-screen">
           <Suspense>
             <TextChordViewer />
           </Suspense>
+          <ChordEditor className="" />
         </div>
       </div>
       <ToolbarPortal />

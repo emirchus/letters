@@ -1,10 +1,11 @@
 "use client";
 
-import { ArrowDownWideNarrowIcon, Copy, Edit, MoreHorizontal, NotepadText, Share, Trash2 } from "lucide-react";
+import { ArrowDownWideNarrowIcon, Copy, Edit, MoreHorizontal, Share, Trash2 } from "lucide-react";
 import { Link } from "next-view-transitions";
 import { use } from "react";
 
 import { getSongs } from "@/app/supabase/get-songs";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,18 +28,14 @@ export const NavMain = ({ promise }: Props) => {
       {songs?.map(item => (
         <SidebarMenuItem key={item.id}>
           <SidebarMenuButton size={"lg"} asChild>
-            <Link href={`/letters/${item.id}`} className="flex cursor-pointer flex-row items-start gap-2">
-              <div className="flex aspect-square size-6 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <NotepadText className="size-4" />
-              </div>
-              <div
-                className="flex w-full flex-col overflow-hidden"
-                style={{
-                  width: "calc(var(--sidebar-width) - 5rem)",
-                }}
-              >
-                <h3 className="truncate font-bold">{item.title}</h3>
-                <h4 className="truncate text-xs text-muted-foreground">{item.author}</h4>
+            <Link href={`/letters/${item.id}`} className="flex cursor-pointer">
+              <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage className="object-cover" src={item.cover} alt={item.title} />
+                <AvatarFallback className="rounded-lg">{item.title[0]}</AvatarFallback>
+              </Avatar>
+              <div className="grid flex-1 text-left text-sm leading-tight">
+                <span className="truncate font-semibold">{item.title}</span>
+                <span className="truncate text-xs">{item.author}</span>
               </div>
             </Link>
           </SidebarMenuButton>

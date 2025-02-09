@@ -137,7 +137,6 @@ const ChordsPopover = memo(function renderChordPopover({
   onSelectChord: (chord: Chord | "") => void;
   position: { x: number; y: number } | null;
 }) {
-  console.log("RENDER");
   return (
     <AnimatePresence custom={TRANSITION}>
       {isOpen && (

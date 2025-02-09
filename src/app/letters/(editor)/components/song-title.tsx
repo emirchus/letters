@@ -24,9 +24,8 @@ export const SongTitle = ({ className }: Props) => {
           onChange={e => setSongTitle(e.target.value)}
           placeholder="Title song"
           autoFocus
-          minHeight={80}
           className={cn(
-            "h-[80px] w-full appearance-none border-none bg-transparent p-4 font-heading text-5xl font-bold outline-none placeholder:text-muted"
+            "h-[80px] w-full resize-none appearance-none border-none bg-transparent p-4 font-heading text-5xl font-bold outline-none placeholder:text-muted"
           )}
         />
       ) : (

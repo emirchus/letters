@@ -12,7 +12,7 @@ export default async function LoggedLayout({ children }: { children: React.React
       className="h-svh overflow-hidden"
     >
       <AppSidebar />
-      <SidebarInset id="editor-content" className="min-h-svh overflow-hidden">
+      <SidebarInset id="editor-content" className="min-h-svh overflow-hidden bg-white">
         {children}
       </SidebarInset>
     </SidebarProvider>
