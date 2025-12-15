@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { useImperativeHandle } from "react";
+import {useImperativeHandle} from "react";
 
-import { cn } from "@/lib/utils";
+import {cn} from "@/lib/utils";
 
 interface UseAutosizeTextAreaProps {
   textAreaRef: React.MutableRefObject<HTMLTextAreaElement | null>;
@@ -19,10 +19,12 @@ export const useAutosizeTextArea = ({
   minHeight = 0,
 }: UseAutosizeTextAreaProps) => {
   const [init, setInit] = React.useState(true);
+
   React.useEffect(() => {
     // We need to reset the height momentarily to get the correct scrollHeight for the textarea
     const offsetBorder = 6;
     const textAreaElement = textAreaRef.current;
+
     if (textAreaElement) {
       if (init) {
         textAreaElement.style.minHeight = `${minHeight + offsetBorder}px`;
@@ -33,6 +35,7 @@ export const useAutosizeTextArea = ({
       }
       textAreaElement.style.height = `${minHeight + offsetBorder}px`;
       const scrollHeight = textAreaElement.scrollHeight;
+
       // We then set the height directly, outside of the render loop
       // Trying to set this with state or a ref will product an incorrect value.
       if (scrollHeight > maxHeight) {
@@ -41,8 +44,7 @@ export const useAutosizeTextArea = ({
         textAreaElement.style.height = `${scrollHeight + offsetBorder}px`;
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [textAreaRef.current, triggerAutoSize]);
+  }, [init, maxHeight, minHeight, textAreaRef, triggerAutoSize]);
 };
 
 export type AutosizeTextAreaRef = {
@@ -66,7 +68,7 @@ export const AutosizeTextarea = React.forwardRef<AutosizeTextAreaRef, AutosizeTe
       value,
       ...props
     }: AutosizeTextAreaProps,
-    ref: React.Ref<AutosizeTextAreaRef>
+    ref: React.Ref<AutosizeTextAreaRef>,
   ) => {
     const textAreaRef = React.useRef<HTMLTextAreaElement | null>(null);
     const [triggerAutoSize, setTriggerAutoSize] = React.useState("");
@@ -92,15 +94,15 @@ export const AutosizeTextarea = React.forwardRef<AutosizeTextAreaRef, AutosizeTe
     return (
       <textarea
         {...props}
-        value={value}
         ref={textAreaRef}
         className={cn(className)}
-        onChange={e => {
+        value={value}
+        onChange={(e) => {
           setTriggerAutoSize(e.target.value);
           onChange?.(e);
         }}
       />
     );
-  }
+  },
 );
 AutosizeTextarea.displayName = "AutosizeTextarea";

@@ -31,10 +31,11 @@
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
-    "autoprefixer": "^10.4.20",
+    "@tailwindcss/postcss": "^4.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "framer-motion": "^12.4.1",
     "lucide-react": "^0.475.0",
     "next": "15.1.6",
@@ -48,13 +49,12 @@
     "server-only": "^0.0.1",
     "supabase": "^2.9.6",
     "tailwind-merge": "^3.0.1",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.0.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.6",
-    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
     "@next/eslint-plugin-next": "15.1.6",
     "@types/node": "^22.13.1",
     "@types/react": "19.0.8",
@@ -78,6 +78,10 @@
     "overrides": {
       "@types/react": "19.0.8",
       "@types/react-dom": "19.0.3"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "sharp",
+      "supabase"
+    ]
   }
 }

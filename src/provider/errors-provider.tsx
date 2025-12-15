@@ -1,7 +1,7 @@
 "use client";
 
-import { parseAsString, useQueryState } from "nuqs";
-import React, { createContext, ReactNode, useContext } from "react";
+import {parseAsString, useQueryState} from "nuqs";
+import React, {createContext, ReactNode, useContext} from "react";
 
 import {
   AlertDialog,
@@ -23,9 +23,11 @@ const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
 
 export const useError = () => {
   const context = useContext(ErrorContext);
+
   if (context === undefined) {
     throw new Error("useError must be used within an ErrorProvider");
   }
+
   return context;
 };
 
@@ -33,13 +35,13 @@ interface ErrorProviderProps {
   children: ReactNode;
 }
 
-export const ErrorProvider = ({ children }: ErrorProviderProps) => {
+export function ErrorProvider({children}: ErrorProviderProps) {
   const [error, setError] = useQueryState("error", parseAsString);
 
   const clearError = () => setError(null);
 
   return (
-    <ErrorContext.Provider value={{ error, setError, clearError }}>
+    <ErrorContext.Provider value={{error, setError, clearError}}>
       <AlertDialog open={!!error} onOpenChange={clearError}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -54,4 +56,4 @@ export const ErrorProvider = ({ children }: ErrorProviderProps) => {
       {children}
     </ErrorContext.Provider>
   );
-};
+}

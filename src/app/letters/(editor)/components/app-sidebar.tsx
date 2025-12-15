@@ -1,10 +1,14 @@
 "use server";
 
-import { LetterText } from "lucide-react";
-import { RedirectType } from "next/navigation";
+import {LetterText} from "lucide-react";
+import {RedirectType} from "next/navigation";
 import * as React from "react";
 
-import { getSongs } from "@/app/supabase/get-songs";
+import {NavMain} from "./nav-main";
+import {NavQuotaCard} from "./nav-quota-card";
+import {NavUser} from "./nav-user";
+
+import {getSongs} from "@/app/supabase/get-songs";
 import {
   Sidebar,
   SidebarContent,
@@ -16,17 +20,14 @@ import {
   SidebarMenuItem,
   SidebarMenuSkeleton,
 } from "@/components/ui/sidebar";
-import { createClient } from "@/lib/supabase/server";
-import { encodedRedirect } from "@/lib/utils";
-import { NavMain } from "./nav-main";
-import { NavQuotaCard } from "./nav-quota-card";
-import { NavUser } from "./nav-user";
+import {createClient} from "@/lib/supabase/server";
+import {encodedRedirect} from "@/lib/utils";
 
-export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export async function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
   const supabase = await createClient();
 
   const {
-    data: { user },
+    data: {user},
     error,
   } = await supabase.auth.getUser();
 
@@ -41,15 +42,9 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <LetterText className="size-4" />
-              </div>
-              <div className="flex flex-col justify-center gap-0.5 leading-none">
-                <h1 className="!font-heading font-semibold">Letters</h1>
-                <span className="font-mono text-xs">v1.0.0</span>
-              </div>
-            </SidebarMenuButton>
+            <h1 className="font-heading! text-sidebar-foreground/70 ring-sidebar-ring flex h-8 shrink-0 items-center rounded-md px-2 font-semibold outline-hidden transition-[margin] duration-200 ease-linear group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0">
+              Letters
+            </h1>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
@@ -58,7 +53,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
           <React.Suspense
             fallback={
               <SidebarMenu>
-                {Array.from({ length: 5 }).map((_, index) => (
+                {Array.from({length: 5}).map((_, index) => (
                   <SidebarMenuItem key={index}>
                     <SidebarMenuSkeleton className="bg-primary/50" />
                   </SidebarMenuItem>
@@ -76,8 +71,8 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
         </div>
         <NavUser
           user={{
-            name: user?.user_metadata?.name ?? "Unknown",
-            email: user?.email ?? "Unknown",
+            name: "Papurri13",
+            email: "",
             avatar: user?.user_metadata?.avatar_url ?? "",
           }}
         />

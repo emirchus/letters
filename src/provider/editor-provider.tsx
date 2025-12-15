@@ -1,21 +1,21 @@
 "use client";
 
-import { createContext, useContext, useRef, useState } from "react";
+import {createContext, useContext, useRef, useState} from "react";
 
-import { Chord } from "@/interface/chord";
+import {Chord} from "@/interface/chord";
 
 type EditorContextProviderProps = {
   children: React.ReactNode;
   text?: string | undefined;
-  chords?: { [key: number]: Chord | "" };
+  chords?: {[key: number]: Chord | ""};
   songTitle?: string | undefined;
 };
 
 type EditorContextType = {
   text: string;
   setText: (text: string) => void;
-  chords: { [key: number]: Chord | "" };
-  setChords: (chords: { [key: number]: Chord | "" }) => void;
+  chords: {[key: number]: Chord | ""};
+  setChords: (chords: {[key: number]: Chord | ""}) => void;
   setChord: (index: number, chord: Chord | "") => void;
   textareaRef: React.RefObject<HTMLTextAreaElement>;
   songTitle?: string | undefined;
@@ -34,15 +34,15 @@ export const useEditor = () => {
   return context;
 };
 
-export const EditorContextProvider = ({
+export function EditorContextProvider({
   children,
   chords: initialChords = {},
   text: initialText = "",
   songTitle: initialSongTitle,
-}: EditorContextProviderProps) => {
+}: EditorContextProviderProps) {
   const [text, setText] = useState<string>(initialText);
   const [songTitle, setSongTitle] = useState<string | undefined>(initialSongTitle);
-  const [chords, setChords] = useState<{ [key: number]: Chord | "" }>(initialChords);
+  const [chords, setChords] = useState<{[key: number]: Chord | ""}>(initialChords);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   return (
@@ -53,7 +53,7 @@ export const EditorContextProvider = ({
         chords,
         setChords,
         setChord: (index, chord) => {
-          setChords({ ...chords, [index]: chord });
+          setChords({...chords, [index]: chord});
         },
         textareaRef,
         songTitle,
@@ -63,4 +63,4 @@ export const EditorContextProvider = ({
       {children}
     </EditorContext.Provider>
   );
-};
+}

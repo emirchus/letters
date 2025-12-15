@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import {NextResponse} from "next/server";
 
-import { createClient } from "@/lib/supabase/server";
+import {createClient} from "@/lib/supabase/server";
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const supabase = await createClient();
 
     const {
-      data: { session, user },
+      data: {session, user},
     } = await supabase.auth.exchangeCodeForSession(code);
 
     const forwardedHost = request.headers.get("x-forwarded-host");
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
       },
     };
 
-    const { data, error } = await fetch(url, options).then(res => res.json());
+    const {data, error} = await fetch(url, options).then((res) => res.json());
 
     await supabase.from("profiles").upsert([
       {

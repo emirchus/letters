@@ -1,10 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { redirect, RedirectType } from "next/navigation";
+import {revalidatePath} from "next/cache";
+import {redirect, RedirectType} from "next/navigation";
 
-import { createClient } from "@/lib/supabase/server";
-import { encodedRedirect } from "@/lib/utils";
+import {createClient} from "@/lib/supabase/server";
+import {encodedRedirect} from "@/lib/utils";
 
 export const signInWithEmail = async (data: FormData) => {
   const supabase = await createClient();
@@ -12,7 +12,7 @@ export const signInWithEmail = async (data: FormData) => {
   const email = data.get("email") as string;
   const password = data.get("password") as string;
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const {error} = await supabase.auth.signInWithPassword({
     email,
     password,
   });
@@ -32,7 +32,7 @@ export const signUpWithEmail = async (form: FormData) => {
   const email = form.get("email") as string;
   const password = form.get("password") as string;
 
-  const { error } = await supabase.auth.signUp({
+  const {error} = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -55,7 +55,7 @@ export const updateUserData = async (data: FormData) => {
   const name = data.get("name") as string;
   const avatar = data.get("avatar") as string;
 
-  const { error } = await supabase.auth.updateUser({
+  const {error} = await supabase.auth.updateUser({
     data: {
       full_name: name,
       avatar_url: avatar,

@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {Progress} from "@/components/ui/progress";
 
 export function NavQuotaCard() {
   return (
@@ -10,7 +10,7 @@ export function NavQuotaCard() {
           <CardDescription>Subscribe to get more features</CardDescription>
         </CardHeader>
         <CardContent className="my-2">
-          <Progress value={20} className="w-full" />
+          <Progress className="w-full" value={20} />
         </CardContent>
       </form>
     </Card>

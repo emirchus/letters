@@ -1,6 +1,6 @@
-export function startViewTransition(callback: () => any) {
-  if (typeof document !== "undefined" && (document as any).startViewTransition) {
-    (document as any).startViewTransition(callback);
+export function startViewTransition<T>(callback: () => T) {
+  if (typeof document !== "undefined" && document.startViewTransition != undefined) {
+    document.startViewTransition(callback);
   } else {
     callback();
   }

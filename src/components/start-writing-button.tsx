@@ -1,15 +1,16 @@
-import { PenTool } from "lucide-react";
+import {PenTool} from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-import { createClient } from "@/lib/supabase/server";
-import { TextScramble } from "./text-scramble";
-import { Button } from "./ui/button";
+import {TextScramble} from "./text-scramble";
+import {Button} from "./ui/button";
+
+import {createClient} from "@/lib/supabase/server";
 
 export async function StartWritingButton() {
   const supabase = await createClient();
 
-  const { data } = await supabase.auth.getUser();
+  const {data} = await supabase.auth.getUser();
 
   const url = data.user ? `/letters/` : "/login";
 

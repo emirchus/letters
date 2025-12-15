@@ -1,15 +1,21 @@
 "use client";
 
 // External dependencies
-import { ChevronsUpDown, Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import type {FC} from "react";
+
+import {ChevronsUpDown, Loader2} from "lucide-react";
+import {useEffect, useState} from "react";
 
 // UI Components
-import { Button } from "@/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-
-import type { FC } from "react";
+import {Button} from "@/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandList,
+} from "@/components/ui/command";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 
 /**
  * Props interface for the ComboBox component
@@ -40,13 +46,13 @@ interface ComboBoxProps {
  * @param {ComboBoxProps} props - Component props
  * @returns {JSX.Element} The ComboBox component
  */
-export const ComboBox: FC<ComboBoxProps> = ({
+export function ComboBox({
   children,
   selectedItem,
   placeholder = "Search...",
   isLoading = false,
   closeOnSelect = true,
-}) => {
+}: ComboBoxProps) {
   // State for controlling popover
   const [open, setOpen] = useState(false);
 
@@ -62,43 +68,43 @@ export const ComboBox: FC<ComboBoxProps> = ({
       {/* Trigger Button */}
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
-          role="combobox"
+          aria-controls="combo-box-content"
           aria-expanded={open}
           aria-haspopup="listbox"
-          aria-controls="combo-box-content"
           className="flex w-full items-center justify-between gap-2"
+          role="combobox"
+          variant="outline"
         >
           {/* Selected Item Display */}
-          <span className="truncate" aria-label={`Selected: ${selectedItem}`}>
+          <span aria-label={`Selected: ${selectedItem}`} className="truncate">
             {selectedItem}
           </span>
 
           {/* Status Indicators */}
-          <div className="flex items-center justify-between gap-2" aria-hidden="true">
+          <div aria-hidden="true" className="flex items-center justify-between gap-2">
             {/* Loading Indicator */}
-            {isLoading && <Loader2 className="size-4 animate-spin opacity-50" aria-hidden="true" />}
+            {isLoading && <Loader2 aria-hidden="true" className="size-4 animate-spin opacity-50" />}
             {/* Dropdown Indicator */}
-            <ChevronsUpDown className="size-4 shrink-0 opacity-50" aria-hidden="true" />
+            <ChevronsUpDown aria-hidden="true" className="size-4 shrink-0 opacity-50" />
           </div>
         </Button>
       </PopoverTrigger>
 
       {/* Dropdown Content */}
-      <PopoverContent className="w-[--radix-popover-trigger-width] p-0" id="combo-box-content">
-        <Command className="w-full" aria-label="Search and select options">
+      <PopoverContent className="w-(--radix-popover-trigger-width) p-0" id="combo-box-content">
+        <Command aria-label="Search and select options" className="w-full">
           {/* Search Input */}
-          <CommandInput placeholder={placeholder} aria-label={placeholder} />
+          <CommandInput aria-label={placeholder} placeholder={placeholder} />
 
           {/* Options List */}
           <CommandList aria-label="Available options">
             {/* Empty State */}
-            <CommandEmpty role="status" aria-live="polite">
+            <CommandEmpty aria-live="polite" role="status">
               No items found.
             </CommandEmpty>
 
             {/* Options Group */}
-            <CommandGroup role="listbox" aria-label="Options">
+            <CommandGroup aria-label="Options" role="listbox">
               {children}
             </CommandGroup>
           </CommandList>
@@ -106,4 +112,4 @@ export const ComboBox: FC<ComboBoxProps> = ({
       </PopoverContent>
     </Popover>
   );
-};
+}

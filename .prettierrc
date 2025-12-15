@@ -1,12 +1,13 @@
 {
-  "arrowParens": "avoid",
-  "bracketSpacing": true,
-  "endOfLine": "auto",
-  "importOrder": ["<BUILTIN_MODULES>", "<THIRD_PARTY_MODULES>", "", "^@/(.*)$", "^[./]", "", "<TYPES>", "<TYPES>^[./]"],
-  "plugins": ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-sort-json", "prettier-plugin-tailwindcss"],
-  "printWidth": 120,
-  "semi": true,
+  "printWidth": 100,
+  "trailingComma": "all",
   "tabWidth": 2,
-  "trailingComma": "es5",
-  "useTabs": false
+  "semi": true,
+  "singleQuote": false,
+  "bracketSpacing": false,
+  "arrowParens": "always",
+  "endOfLine": "auto",
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ]
 }

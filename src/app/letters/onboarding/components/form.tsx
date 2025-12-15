@@ -1,19 +1,26 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import {useRouter} from "next/navigation";
+import {useState, useTransition} from "react";
 
-import { uploadAvatar } from "@/app/supabase/upload-avatar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Spinner } from "@/components/ui/spinner";
-import { useError } from "@/provider/errors-provider";
-import { updateUser } from "../actions/update-user";
+import {updateUser} from "../actions/update-user";
+
+import {uploadAvatar} from "@/app/supabase/upload-avatar";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import {Button} from "@/components/ui/button";
+import {Checkbox} from "@/components/ui/checkbox";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {Spinner} from "@/components/ui/spinner";
+import {useError} from "@/provider/errors-provider";
 
 // import { submitOnboarding } from "./actions";
 
@@ -27,7 +34,7 @@ export default function OnboardingForm() {
 
   const [isPending, startTransition] = useTransition();
 
-  const { setError } = useError();
+  const {setError} = useError();
 
   const router = useRouter();
 
@@ -47,19 +54,20 @@ export default function OnboardingForm() {
       router.push("/letters");
     });
   };
+
   return (
-    <form onSubmit={handleSubmit} className="mx-auto max-w-md space-y-8">
+    <form className="mx-auto max-w-md space-y-8" onSubmit={handleSubmit}>
       {step === 1 && (
         <div className="space-y-4">
           <div>
             <Label htmlFor="name">What&apos;s your name?</Label>
             <Input
+              required
               id="name"
               name="name"
-              value={name}
-              onChange={e => setName(e.target.value)}
               placeholder="Enter your name"
-              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <Button onClick={() => setStep(2)}>Next</Button>
@@ -71,27 +79,29 @@ export default function OnboardingForm() {
           <Label>Upload your avatar</Label>
           <div className="flex items-center space-x-4">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={avatar ? URL.createObjectURL(avatar) : ""} alt="Avatar" />
+              <AvatarImage alt="Avatar" src={avatar ? URL.createObjectURL(avatar) : ""} />
               <AvatarFallback>{name.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
             <Input
+              accept="image/*"
+              className="w-full"
+              name="avatar"
               title="Upload your avatar"
               type="file"
-              accept="image/*"
-              name="avatar"
-              onChange={e => {
+              onChange={(e) => {
                 const file = e.target.files?.[0];
+
                 if (file && file.size > 52428800) {
                   setError("Avatar is too large. Max size is 50MB.");
+
                   return;
                 }
                 setAvatar(file || null);
               }}
-              className="w-full"
             />
           </div>
           <div className="flex justify-between">
-            <Button onClick={() => setStep(1)} variant="outline">
+            <Button variant="outline" onClick={() => setStep(1)}>
               Back
             </Button>
             <Button onClick={() => setStep(3)}>Next</Button>
@@ -104,28 +114,28 @@ export default function OnboardingForm() {
           <div>
             <Label>How do you prefer to listen to music?</Label>
             <RadioGroup
+              className="mt-2"
               name="musicPreference"
               value={musicPreference}
               onValueChange={setMusicPreference}
-              className="mt-2"
             >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="streaming" id="streaming" />
+                <RadioGroupItem id="streaming" value="streaming" />
                 <Label htmlFor="streaming">Streaming Services</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="download" id="download" />
+                <RadioGroupItem id="download" value="download" />
                 <Label htmlFor="download">Downloading</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="physical" id="physical" />
+                <RadioGroupItem id="physical" value="physical" />
                 <Label htmlFor="physical">Physical Media (CD, Vinyl)</Label>
               </div>
             </RadioGroup>
           </div>
           <div className="space-y-2">
             <Label htmlFor="musicPlatform">What&apos;s your preferred music platform?</Label>
-            <Select value={musicPlatform} onValueChange={setMusicPlatform} name="musicPlatform">
+            <Select name="musicPlatform" value={musicPlatform} onValueChange={setMusicPlatform}>
               <SelectTrigger id="musicPlatform">
                 <SelectValue placeholder="Select a platform" />
               </SelectTrigger>
@@ -142,13 +152,13 @@ export default function OnboardingForm() {
           <div>
             <Label>What genres do you enjoy? (Select all that apply)</Label>
             <div className="mt-2 grid grid-cols-2 gap-2">
-              {["Rock", "Pop", "Hip-Hop", "Jazz", "Classical", "Electronic"].map(genre => (
+              {["Rock", "Pop", "Hip-Hop", "Jazz", "Classical", "Electronic"].map((genre) => (
                 <div key={genre} className="flex items-center space-x-2">
                   <Checkbox
-                    id={genre}
                     checked={genres.includes(genre)}
-                    onCheckedChange={checked => {
-                      setGenres(checked ? [...genres, genre] : genres.filter(g => g !== genre));
+                    id={genre}
+                    onCheckedChange={(checked) => {
+                      setGenres(checked ? [...genres, genre] : genres.filter((g) => g !== genre));
                     }}
                   />
                   <Label htmlFor={genre}>{genre}</Label>
@@ -157,11 +167,11 @@ export default function OnboardingForm() {
             </div>
           </div>
           <div className="flex justify-between">
-            <Button onClick={() => setStep(2)} variant="outline">
+            <Button variant="outline" onClick={() => setStep(2)}>
               Back
             </Button>
             <Button disabled={isPending} type="submit">
-              {isPending ? <Spinner className="bg-primary-foreground" /> : <></>} Complete Onboarding
+              {isPending && <Spinner className="bg-primary-foreground" />} Complete Onboarding
             </Button>
           </div>
         </div>
