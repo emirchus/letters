@@ -1,8 +1,8 @@
-import { clsx } from "clsx";
-import { redirect, RedirectType } from "next/navigation";
-import { twMerge } from "tailwind-merge";
+import type { ClassValue } from 'clsx';
 
-import type { ClassValue } from "clsx";
+import { clsx } from 'clsx';
+import { RedirectType, redirect } from 'next/navigation';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -16,7 +16,7 @@ export function cn(...inputs: ClassValue[]) {
  * @returns {never} This function doesn't return as it triggers a redirect.
  */
 export function encodedRedirect(
-  type: "error" | "success",
+  type: 'error' | 'success',
   path: string,
   message: string,
   options?: {

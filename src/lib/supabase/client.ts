@@ -1,8 +1,7 @@
-import { createBrowserClient } from "@supabase/ssr";
+import 'react';
 
-import "react";
-
-import type { SupabaseClient } from "@supabase/supabase-js";
+import { createBrowserClient } from '@supabase/ssr';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 export type SupabaseClientTyped = SupabaseClient;
 

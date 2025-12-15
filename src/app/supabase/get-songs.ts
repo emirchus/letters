@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import "server-only";
+import 'server-only';
 
-import { createClient } from "@/lib/supabase/server";
-import { unstable_cache } from "@/lib/unstable-cache";
+import { createClient } from '@/lib/supabase/server';
+import { unstable_cache } from '@/lib/unstable-cache';
 
 export const getSongs = async () => {
   const supabase = await createClient();
@@ -16,14 +16,14 @@ export const getSongs = async () => {
 
   return unstable_cache(
     async () => {
-      const { data } = await supabase.from("songs").select("*").eq("user_id", user.user?.id);
+      const { data } = await supabase.from('songs').select('*').eq('user_id', user.user?.id);
 
       return data;
     },
-    ["songs", user.user?.id],
+    ['songs', user.user?.id],
     {
       revalidate: 60 * 60 * 24,
-      tags: ["songs"],
+      tags: ['songs'],
     }
   )();
 };

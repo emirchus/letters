@@ -1,7 +1,6 @@
-import { createServerClient } from "@supabase/ssr";
-import { NextResponse } from "next/server";
-
-import type { NextRequest } from "next/server";
+import { createServerClient } from '@supabase/ssr';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export const updateSession = async (request: NextRequest) => {
   try {
@@ -33,37 +32,37 @@ export const updateSession = async (request: NextRequest) => {
 
     const onboardingCompleted = user.data.user?.user_metadata?.onboarding_completed;
 
-    const protectedRoutes: `/${string}`[] = ["/letters"];
+    const protectedRoutes: `/${string}`[] = [];
 
-    const onboardingRoute = "/letters/onboarding";
+    const onboardingRoute = '/letters/onboarding';
 
     if (
       !onboardingCompleted &&
       request.nextUrl.pathname !== onboardingRoute &&
       protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
     ) {
-      return NextResponse.redirect(new URL("/letters/onboarding", request.url));
+      return NextResponse.redirect(new URL('/letters/onboarding', request.url));
     } else if (
       onboardingCompleted &&
       request.nextUrl.pathname === onboardingRoute &&
       protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
     ) {
-      return NextResponse.redirect(new URL("/letters", request.url));
+      return NextResponse.redirect(new URL('/letters', request.url));
     }
 
     if (protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route)) && user.error) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL('/', request.url));
     }
 
     if (
-      (request.nextUrl.pathname.startsWith("/login") || request.nextUrl.pathname.startsWith("/signup")) &&
+      (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/signup')) &&
       user.data.user
     ) {
-      return NextResponse.redirect(new URL("/letters", request.url));
+      return NextResponse.redirect(new URL('/letters', request.url));
     }
 
     return response;
-  } catch (e) {
+  } catch (_e) {
     return NextResponse.next({
       request: {
         headers: request.headers,

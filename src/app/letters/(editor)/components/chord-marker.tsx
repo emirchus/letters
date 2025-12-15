@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { AnimatePresence, motion, MotionConfig } from "framer-motion";
-import { ArrowLeftIcon } from "lucide-react";
-import { LegacyRef, memo, useEffect, useId, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-
-import useClickOutside from "@/hooks/use-click-outside";
-import { Chord } from "@/interface/chord";
-import { ChordSelector } from "./chord-selector";
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { ArrowLeftIcon } from 'lucide-react';
+import { memo, RefAttributes, useCallback, useEffect, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Button } from '@/components/ui/button';
+import useClickOutside from '@/hooks/use-click-outside';
+import { Chord } from '@/interface/chord';
+import { ChordSelector } from './chord-selector';
 
 const TRANSITION = {
-  type: "spring",
+  type: 'spring',
   bounce: 0.05,
   duration: 0.3,
 };
@@ -18,7 +18,7 @@ const TRANSITION = {
 interface Props {
   chord: Chord | React.ReactNode;
   onRemove: () => void;
-  onSelectChordAction: (chord: Chord | "") => void;
+  onSelectChordAction: (chord: Chord | '') => void;
   readonly?: boolean;
 }
 
@@ -44,12 +44,14 @@ export function ChordMarker({ chord, onSelectChordAction, readonly }: Props) {
     const MODAL_HEIGHT = 300;
 
     let x = e.clientX - 10;
+
     if (rightSpace < MODAL_WIDTH && leftSpace > MODAL_WIDTH) {
       x = e.clientX - MODAL_WIDTH;
     }
     x = Math.min(Math.max(x, 0), window.innerWidth - MODAL_WIDTH);
 
     let y = e.clientY - 10;
+
     if (bottomSpace < MODAL_HEIGHT && topSpace > MODAL_HEIGHT) {
       y = e.clientY - MODAL_HEIGHT;
     }
@@ -58,10 +60,10 @@ export function ChordMarker({ chord, onSelectChordAction, readonly }: Props) {
     setPosition({ x, y });
   };
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setIsOpen(false);
     setNote(null);
-  };
+  }, []);
 
   useClickOutside(formContainerRef, () => {
     closeMenu();
@@ -69,20 +71,20 @@ export function ChordMarker({ chord, onSelectChordAction, readonly }: Props) {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         closeMenu();
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [closeMenu]);
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
+    if (typeof document !== 'undefined') {
       setIsDoc(true);
     }
   }, []);
@@ -94,10 +96,10 @@ export function ChordMarker({ chord, onSelectChordAction, readonly }: Props) {
       <div className="relative flex items-center justify-center">
         <motion.button
           key="button"
-          className="text-xs"
+          className="cursor-pointer text-xs"
           style={{
             borderRadius: 8,
-            pointerEvents: "auto",
+            pointerEvents: 'auto',
           }}
           onClick={readonly ? undefined : openMenu}
         >
@@ -106,13 +108,13 @@ export function ChordMarker({ chord, onSelectChordAction, readonly }: Props) {
 
         {createPortal(
           <ChordsPopover
-            isOpen={isOpen}
-            formContainerRef={formContainerRef}
-            uniqueId={uniqueId}
             closeMenu={closeMenu}
+            formContainerRef={formContainerRef}
+            isOpen={isOpen}
             note={note}
-            onSelectChord={onSelectChordAction}
             position={position}
+            uniqueId={uniqueId}
+            onSelectChord={onSelectChordAction}
           />,
           document.body
         )}
@@ -130,11 +132,11 @@ const ChordsPopover = memo(function renderChordPopover({
   isOpen,
 }: {
   isOpen: boolean;
-  formContainerRef: LegacyRef<HTMLDivElement> | undefined;
+  formContainerRef: RefAttributes<HTMLDivElement>['ref'] | undefined;
   uniqueId: string;
   closeMenu: () => void;
   note: string | null;
-  onSelectChord: (chord: Chord | "") => void;
+  onSelectChord: (chord: Chord | '') => void;
   position: { x: number; y: number } | null;
 }) {
   return (
@@ -142,41 +144,54 @@ const ChordsPopover = memo(function renderChordPopover({
       {isOpen && (
         <motion.div
           ref={formContainerRef}
-          className="fixed z-50 flex h-[300px] w-[364px] flex-col overflow-hidden border border-zinc-950/10 bg-white p-4 outline-none dark:bg-zinc-700"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          className="bg-card/20 fixed z-50 flex h-[300px] w-[364px] flex-col overflow-hidden border p-4 outline-hidden backdrop-blur-sm"
+          exit={{ opacity: 0, y: 10, scale: 0.8, filter: 'blur(40px)' }}
+          initial={{ opacity: 0, y: 10, scale: 0.8, filter: 'blur(40px)' }}
+          transition={{
+            type: 'spring',
+            duration: 0.2,
+            ease: 'easeInOut',
+            bounce: 0.5,
+            damping: 10,
+            stiffness: 100,
+          }}
           style={{
             borderRadius: 12,
-            pointerEvents: "auto",
+            pointerEvents: 'auto',
             left: position?.x,
             top: position?.y,
+            transformOrigin: 'center top',
           }}
         >
           <div className="flex w-full flex-row items-center justify-start">
-            <button type="button" className="flex items-center" onClick={closeMenu} aria-label="Close popover">
-              <ArrowLeftIcon size={16} className="text-zinc-900 dark:text-zinc-100" />
+            <button aria-label="Close popover" className="flex items-center" type="button" onClick={closeMenu}>
+              <ArrowLeftIcon className="text-zinc-900 dark:text-zinc-100" size={16} />
             </button>
             <motion.span
               aria-hidden="true"
+              className="my-auto ml-2 text-sm text-zinc-500 select-none dark:text-zinc-400"
               style={{
                 opacity: note ? 0 : 1,
               }}
-              className="my-auto ml-2 select-none text-sm text-zinc-500 dark:text-zinc-400"
             >
               Add Chord
             </motion.span>
-            <button
-              className="relative ml-auto flex h-8 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 bg-transparent px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] dark:border-zinc-50/10 dark:text-zinc-50 dark:hover:bg-zinc-800"
-              type="submit"
+
+            <Button
               aria-label="Submit note"
+              className="ml-auto"
+              size="sm"
+              type="submit"
+              variant="outline"
               onClick={() => {
-                onSelectChord("");
+                onSelectChord('');
                 closeMenu();
               }}
             >
+              {' '}
               Delete Chord
-            </button>
+            </Button>
           </div>
 
           <div className="h-full w-full">

@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from '@/lib/supabase/server';
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
-  const code = requestUrl.searchParams.get("code");
+  const code = requestUrl.searchParams.get('code');
   const origin = requestUrl.origin;
-  const next = requestUrl.searchParams.get("next") ?? "/";
+  const next = requestUrl.searchParams.get('next') ?? '/';
 
   if (code) {
     const supabase = await createClient();
@@ -15,22 +15,22 @@ export async function GET(request: Request) {
       data: { session, user },
     } = await supabase.auth.exchangeCodeForSession(code);
 
-    const forwardedHost = request.headers.get("x-forwarded-host");
-    const isLocalEnv = process.env.NODE_ENV === "development";
+    const forwardedHost = request.headers.get('x-forwarded-host');
+    const isLocalEnv = process.env.NODE_ENV === 'development';
 
     const url = `https://api.twitch.tv/helix/subscriptions/user?broadcaster_id=83953406&user_id=${session?.user.user_metadata.sub}`;
 
     const options = {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Client-ID": process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID || "",
+        'Client-ID': process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID || '',
         Authorization: `Bearer ${session?.provider_token}`,
       },
     };
 
     const { data, error } = await fetch(url, options).then(res => res.json());
 
-    await supabase.from("profiles").upsert([
+    await supabase.from('profiles').upsert([
       {
         id: user?.id as string,
         sub: error == null && data.length > 0,

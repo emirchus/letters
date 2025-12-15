@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import "server-only";
+import 'server-only';
 
-import { createClient } from "@/lib/supabase/server";
-import { encodedRedirect } from "@/lib/utils";
+import { createClient } from '@/lib/supabase/server';
+import { encodedRedirect } from '@/lib/utils';
 
 export async function updateUser(formData: FormData) {
   const supabase = await createClient();
@@ -11,8 +11,7 @@ export async function updateUser(formData: FormData) {
   const { error } = await supabase.auth.getUser();
 
   if (error) {
-    console.error(error);
-    return encodedRedirect("error", "/", error.message);
+    return encodedRedirect('error', '/', error.message);
   }
 
   const { name, musicPreference, genres, musicPlatform } = Object.fromEntries(formData.entries());

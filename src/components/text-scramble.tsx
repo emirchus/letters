@@ -1,10 +1,9 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-
-import type { MotionProps } from "framer-motion";
-import type { JSX } from "react";
+import type { MotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
+import type { JSX } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 type TextScrambleProps = {
   children: string;
@@ -17,7 +16,7 @@ type TextScrambleProps = {
   onScrambleComplete?: () => void;
 } & MotionProps;
 
-const defaultChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const defaultChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 export function TextScramble({
   children,
@@ -25,7 +24,7 @@ export function TextScramble({
   speed = 0.04,
   characterSet = defaultChars,
   className,
-  as: Component = "p",
+  as: Component = 'p',
   trigger = true,
   onScrambleComplete,
   ...props
@@ -35,7 +34,7 @@ export function TextScramble({
   const [isAnimating, setIsAnimating] = useState(false);
   const text = children;
 
-  const scramble = async () => {
+  const scramble = useCallback(async () => {
     if (isAnimating) return;
     setIsAnimating(true);
 
@@ -43,12 +42,12 @@ export function TextScramble({
     let step = 0;
 
     const interval = setInterval(() => {
-      let scrambled = "";
+      let scrambled = '';
       const progress = step / steps;
 
       for (let i = 0; i < text.length; i++) {
-        if (text[i] === " ") {
-          scrambled += " ";
+        if (text[i] === ' ') {
+          scrambled += ' ';
           continue;
         }
 
@@ -69,14 +68,13 @@ export function TextScramble({
         onScrambleComplete?.();
       }
     }, speed * 1000);
-  };
+  }, [characterSet, duration, isAnimating, onScrambleComplete, speed, text]);
 
   useEffect(() => {
     if (!trigger) return;
 
     scramble();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trigger]);
+  }, [scramble, trigger]);
 
   return (
     <MotionComponent className={className} {...props}>

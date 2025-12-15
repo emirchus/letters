@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 
-import { Chord, chords } from "@/interface/chord";
+import { Chord, chords } from '@/interface/chord';
 
 interface ChordDiagramProps {
   chordName: Chord;
@@ -9,7 +9,7 @@ interface ChordDiagramProps {
 export function ChordDiagram({ chordName }: ChordDiagramProps) {
   const strings = 6;
   const fretCount = 5;
-  const openStrings = ["E", "a", "d", "g", "b", "e"];
+  const openStrings = ['E', 'a', 'd', 'g', 'b', 'e'];
 
   const chord = useMemo(() => chords.find(chord => chord.name === chordName)!, [chordName]);
   const frets = chord.frets;
@@ -20,7 +20,7 @@ export function ChordDiagram({ chordName }: ChordDiagramProps) {
   );
 
   return (
-    <div className="pointer-events-none flex select-none flex-col items-center">
+    <div className="pointer-events-none flex flex-col items-center select-none">
       <svg aria-labelledby={`chord-${chordName}`} height="135" viewBox="0 0 100 135" width="100">
         <title id={`chord-${chordName}`}>{`Chord diagram for ${chordName}`}</title>
 
@@ -97,7 +97,7 @@ export function ChordDiagram({ chordName }: ChordDiagramProps) {
           return <circle key={`finger-${i}`} cx={10 + i * 16} cy={20 + (fret - 1) * 20} fill="#3b82f6" r="6" />;
         })}
       </svg>
-      <span className="mt-2 font-mono text-sm font-medium">{chordName}</span>
+      <span className="font-mono text-sm font-medium">{chordName}</span>
     </div>
   );
 }
