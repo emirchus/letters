@@ -1,18 +1,16 @@
-"use client";
+'use client';
 
-import {AnimatePresence, motion, MotionConfig} from "framer-motion";
-import {ArrowLeftIcon} from "lucide-react";
-import {memo, RefAttributes, useEffect, useId, useRef, useState} from "react";
-import {createPortal} from "react-dom";
-
-import {ChordSelector} from "./chord-selector";
-
-import {Button} from "@/components/ui/button";
-import useClickOutside from "@/hooks/use-click-outside";
-import {Chord} from "@/interface/chord";
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { ArrowLeftIcon } from 'lucide-react';
+import { memo, RefAttributes, useCallback, useEffect, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Button } from '@/components/ui/button';
+import useClickOutside from '@/hooks/use-click-outside';
+import { Chord } from '@/interface/chord';
+import { ChordSelector } from './chord-selector';
 
 const TRANSITION = {
-  type: "spring",
+  type: 'spring',
   bounce: 0.05,
   duration: 0.3,
 };
@@ -20,11 +18,11 @@ const TRANSITION = {
 interface Props {
   chord: Chord | React.ReactNode;
   onRemove: () => void;
-  onSelectChordAction: (chord: Chord | "") => void;
+  onSelectChordAction: (chord: Chord | '') => void;
   readonly?: boolean;
 }
 
-export function ChordMarker({chord, onSelectChordAction, readonly}: Props) {
+export function ChordMarker({ chord, onSelectChordAction, readonly }: Props) {
   const uniqueId = useId();
   const formContainerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +30,7 @@ export function ChordMarker({chord, onSelectChordAction, readonly}: Props) {
 
   const [isDoc, setIsDoc] = useState(false);
 
-  const [position, setPosition] = useState<{x: number; y: number} | null>(null);
+  const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
 
   const openMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsOpen(true);
@@ -59,13 +57,13 @@ export function ChordMarker({chord, onSelectChordAction, readonly}: Props) {
     }
     y = Math.min(Math.max(y, 0), window.innerHeight - MODAL_HEIGHT);
 
-    setPosition({x, y});
+    setPosition({ x, y });
   };
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setIsOpen(false);
     setNote(null);
-  };
+  }, []);
 
   useClickOutside(formContainerRef, () => {
     closeMenu();
@@ -73,20 +71,20 @@ export function ChordMarker({chord, onSelectChordAction, readonly}: Props) {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         closeMenu();
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [closeMenu]);
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
+    if (typeof document !== 'undefined') {
       setIsDoc(true);
     }
   }, []);
@@ -101,7 +99,7 @@ export function ChordMarker({chord, onSelectChordAction, readonly}: Props) {
           className="cursor-pointer text-xs"
           style={{
             borderRadius: 8,
-            pointerEvents: "auto",
+            pointerEvents: 'auto',
           }}
           onClick={readonly ? undefined : openMenu}
         >
@@ -118,7 +116,7 @@ export function ChordMarker({chord, onSelectChordAction, readonly}: Props) {
             uniqueId={uniqueId}
             onSelectChord={onSelectChordAction}
           />,
-          document.body,
+          document.body
         )}
       </div>
     </MotionConfig>
@@ -134,36 +132,40 @@ const ChordsPopover = memo(function renderChordPopover({
   isOpen,
 }: {
   isOpen: boolean;
-  formContainerRef: RefAttributes<HTMLDivElement>["ref"] | undefined;
+  formContainerRef: RefAttributes<HTMLDivElement>['ref'] | undefined;
   uniqueId: string;
   closeMenu: () => void;
   note: string | null;
-  onSelectChord: (chord: Chord | "") => void;
-  position: {x: number; y: number} | null;
+  onSelectChord: (chord: Chord | '') => void;
+  position: { x: number; y: number } | null;
 }) {
   return (
     <AnimatePresence custom={TRANSITION}>
       {isOpen && (
         <motion.div
           ref={formContainerRef}
-          animate={{opacity: 1, y: 0}}
-          className="bg-card fixed z-50 flex h-[300px] w-[364px] flex-col overflow-hidden border p-4 outline-hidden"
-          exit={{opacity: 0, y: 10}}
-          initial={{opacity: 0, y: 10}}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          className="bg-card/20 fixed z-50 flex h-[300px] w-[364px] flex-col overflow-hidden border p-4 outline-hidden backdrop-blur-sm"
+          exit={{ opacity: 0, y: 10, scale: 0.8, filter: 'blur(40px)' }}
+          initial={{ opacity: 0, y: 10, scale: 0.8, filter: 'blur(40px)' }}
+          transition={{
+            type: 'spring',
+            duration: 0.2,
+            ease: 'easeInOut',
+            bounce: 0.5,
+            damping: 10,
+            stiffness: 100,
+          }}
           style={{
             borderRadius: 12,
-            pointerEvents: "auto",
+            pointerEvents: 'auto',
             left: position?.x,
             top: position?.y,
+            transformOrigin: 'center top',
           }}
         >
           <div className="flex w-full flex-row items-center justify-start">
-            <button
-              aria-label="Close popover"
-              className="flex items-center"
-              type="button"
-              onClick={closeMenu}
-            >
+            <button aria-label="Close popover" className="flex items-center" type="button" onClick={closeMenu}>
               <ArrowLeftIcon className="text-zinc-900 dark:text-zinc-100" size={16} />
             </button>
             <motion.span
@@ -183,18 +185,18 @@ const ChordsPopover = memo(function renderChordPopover({
               type="submit"
               variant="outline"
               onClick={() => {
-                onSelectChord("");
+                onSelectChord('');
                 closeMenu();
               }}
             >
-              {" "}
+              {' '}
               Delete Chord
             </Button>
           </div>
 
           <div className="h-full w-full">
             <ChordSelector
-              onSelectChord={(chord) => {
+              onSelectChord={chord => {
                 closeMenu();
                 onSelectChord(chord);
               }}

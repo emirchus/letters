@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import {useImperativeHandle} from "react";
+import * as React from 'react';
+import { useImperativeHandle } from 'react';
 
-import {cn} from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface UseAutosizeTextAreaProps {
   textAreaRef: React.MutableRefObject<HTMLTextAreaElement | null>;
@@ -44,7 +44,7 @@ export const useAutosizeTextArea = ({
         textAreaElement.style.height = `${scrollHeight + offsetBorder}px`;
       }
     }
-  }, [init, maxHeight, minHeight, textAreaRef, triggerAutoSize]);
+  }, [init, maxHeight, minHeight, textAreaRef]);
 };
 
 export type AutosizeTextAreaRef = {
@@ -68,10 +68,10 @@ export const AutosizeTextarea = React.forwardRef<AutosizeTextAreaRef, AutosizeTe
       value,
       ...props
     }: AutosizeTextAreaProps,
-    ref: React.Ref<AutosizeTextAreaRef>,
+    ref: React.Ref<AutosizeTextAreaRef>
   ) => {
     const textAreaRef = React.useRef<HTMLTextAreaElement | null>(null);
-    const [triggerAutoSize, setTriggerAutoSize] = React.useState("");
+    const [triggerAutoSize, setTriggerAutoSize] = React.useState('');
 
     useAutosizeTextArea({
       textAreaRef,
@@ -89,7 +89,7 @@ export const AutosizeTextarea = React.forwardRef<AutosizeTextAreaRef, AutosizeTe
 
     React.useEffect(() => {
       setTriggerAutoSize(value as string);
-    }, [props?.defaultValue, value]);
+    }, [value]);
 
     return (
       <textarea
@@ -97,12 +97,12 @@ export const AutosizeTextarea = React.forwardRef<AutosizeTextAreaRef, AutosizeTe
         ref={textAreaRef}
         className={cn(className)}
         value={value}
-        onChange={(e) => {
+        onChange={e => {
           setTriggerAutoSize(e.target.value);
           onChange?.(e);
         }}
       />
     );
-  },
+  }
 );
-AutosizeTextarea.displayName = "AutosizeTextarea";
+AutosizeTextarea.displayName = 'AutosizeTextarea';

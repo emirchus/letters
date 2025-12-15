@@ -1,21 +1,14 @@
-"use client";
+'use client';
 
+import { ChevronsUpDown, Loader2 } from 'lucide-react';
 // External dependencies
-import type {FC} from "react";
-
-import {ChevronsUpDown, Loader2} from "lucide-react";
-import {useEffect, useState} from "react";
+import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 
 // UI Components
-import {Button} from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandList,
-} from "@/components/ui/command";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import { Button } from '@/components/ui/button';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList } from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 /**
  * Props interface for the ComboBox component
@@ -49,7 +42,7 @@ interface ComboBoxProps {
 export function ComboBox({
   children,
   selectedItem,
-  placeholder = "Search...",
+  placeholder = 'Search...',
   isLoading = false,
   closeOnSelect = true,
 }: ComboBoxProps) {
@@ -61,7 +54,7 @@ export function ComboBox({
     if (closeOnSelect) {
       setOpen(false);
     }
-  }, [selectedItem, closeOnSelect, setOpen]);
+  }, [closeOnSelect]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -76,7 +69,7 @@ export function ComboBox({
           variant="outline"
         >
           {/* Selected Item Display */}
-          <span aria-label={`Selected: ${selectedItem}`} className="truncate">
+          <span role="option" tabIndex={0} aria-label={`Selected: ${selectedItem}`} className="truncate">
             {selectedItem}
           </span>
 

@@ -5,9 +5,7 @@
   },
   "editor.formatOnSave": true,
   "javascript.preferences.importModuleSpecifier": "non-relative",
-  "typescript.preferences.autoImportSpecifierExcludeRegexes": [
-    "^next/router"
-  ],
+  "typescript.preferences.autoImportSpecifierExcludeRegexes": ["^next/router"],
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc]": {

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import {ArrowDownWideNarrowIcon, Copy, Edit, MoreHorizontal, Share, Trash2} from "lucide-react";
-import {Link} from "next-view-transitions";
-import {use} from "react";
+import { ArrowDownWideNarrowIcon, Copy, Edit, MoreHorizontal, Share, Trash2 } from 'lucide-react';
+import { Link } from 'next-view-transitions';
+import { use } from 'react';
 
-import {getSongs} from "@/app/supabase/get-songs";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import { getSongs } from '@/app/supabase/get-songs';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,24 +14,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuAction,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from '@/components/ui/dropdown-menu';
+import { SidebarMenu, SidebarMenuAction, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 
 interface Props {
   promise: Promise<Awaited<ReturnType<typeof getSongs>>>;
 }
 
-export function NavMain({promise}: Props) {
+export function NavMain({ promise }: Props) {
   const songs = use(promise);
 
   return (
     <SidebarMenu className="gap-2">
-      {songs?.map((item) => (
+      {songs?.map(item => (
         <SidebarMenuItem key={item.id}>
           <SidebarMenuButton asChild size="lg">
             <Link className="flex cursor-pointer" href={`/letters/${item.id}`}>
@@ -53,9 +48,9 @@ export function NavMain({promise}: Props) {
               </SidebarMenuAction>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              align={false ? "end" : "start"}
+              align={false ? 'end' : 'start'}
               className="min-w-56 rounded-lg"
-              side={false ? "bottom" : "right"}
+              side={false ? 'bottom' : 'right'}
             >
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">

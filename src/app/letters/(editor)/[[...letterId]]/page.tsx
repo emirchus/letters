@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 
 import { SongTitle } from '@/app/letters/(editor)/components/song-title';
 import { TextChordViewer } from '@/app/letters/(editor)/components/text-chord-viewer';
-import { ChordEditor } from '@/app/letters/(editor)/components/text-editor';
+import { ChordEditorV3 } from '@/app/letters/(editor)/components/text-editor-v3';
 import { ToolbarPortal } from '@/app/letters/(editor)/components/toolbar';
 import { getSong } from '@/app/supabase/get-song';
 import { Separator } from '@/components/ui/separator';
@@ -41,7 +41,7 @@ export default async function HomePage({ params }: Props) {
           <Suspense>
             <TextChordViewer />
           </Suspense>
-          <ChordEditor className="" />
+          <ChordEditorV3 />
         </div>
       </div>
       <ToolbarPortal />

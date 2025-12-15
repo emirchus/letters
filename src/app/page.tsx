@@ -39,7 +39,7 @@ export default function HomePage() {
           </Link> */}
         </nav>
       </header>
-      <main className="relative flex-1 before:-z-10  before:absolute before:inset-0  before:bg-[radial-gradient(125%_125%_at_50%_10%,oklch(from_var(--background)_l_c_h_/0.2)_40%,var(--muted-foreground)_100%)]">
+      <main className="relative flex-1 before:-z-10  before:absolute before:inset-0  before:bg-[radial-gradient(125%_125%_at_50%_10%,oklch(from_var(--background)/.2)_40%,var(--muted-foreground)_100%)]">
         <section className="relative before:absolute before:inset-0 before:bg-[linear-gradient(to_bottom,oklch(from_var(--muted-foreground)_l_c_h_/0.2)_1px,transparent_1px)] before:bg-size-[14px_24px] lg:h-[49.7vh]">
           <div className="relative container mx-auto h-full">
             <div className="relative grid h-full w-full grid-cols-1 items-center gap-x-8 overflow-hidden border-x p-6 lg:grid-cols-2 lg:px-12">
@@ -91,7 +91,7 @@ export default function HomePage() {
                 Easily create and manage your letters with simple workflows.
               </p>
             </div>
-            <div className="hover:bg-secondary/20 flex flex-col items-center justify-center gap-y-2 border-b px-4 py-8 transition-colors last:border-b-0 lg:border-r md:nth-[2n+1]:border-r lg:[&:nth-child(3n)]:border-r-0 lg:[&:nth-child(n+4)]:border-b-0 md:[&:nth-child(n+5)]:border-b-0">
+            <div className="hover:bg-secondary/20 flex flex-col items-center justify-center gap-y-2 border-b px-4 py-8 transition-colors last:border-b-0 lg:border-r md:nth-[2n+1]:border-r lg:nth-[3n]:border-r-0 lg:nth-[n+4]:border-b-0 md:nth-[n+5]:border-b-0">
               <div className="flex flex-col items-center gap-y-2">
                 <div className="from-primary to-primary/50 text-primary-foreground group-hover:from-secondary group-hover:to-secondary/80 rounded-lg bg-linear-to-b p-2 transition-colors">
                   <Languages className="h-6 w-6" />
@@ -104,9 +104,9 @@ export default function HomePage() {
                 Write in multiple languages with ease.
               </p>
             </div>
-            <div className="hover:bg-secondary/20 flex flex-col items-center justify-center gap-y-2 border-b px-4 py-8 transition-colors last:border-b-0 lg:border-r md:[&:nth-child(2n+1)]:border-r lg:[&:nth-child(3n)]:border-r-0 lg:[&:nth-child(n+4)]:border-b-0 md:[&:nth-child(n+5)]:border-b-0">
+            <div className="hover:bg-secondary/20 flex flex-col items-center justify-center gap-y-2 border-b px-4 py-8 transition-colors last:border-b-0 lg:border-r md:nth-[2n+1]:border-r lg:nth-[3n]:border-r-0 lg:nth-[n+4]:border-b-0 md:nth-[n+5]:border-b-0">
               <div className="flex flex-col items-center gap-y-2">
-                <div className="from-primary to-primary/50 text-primary-foreground group-hover:from-secondary group-hover:to-secondary/80 rounded-lg bg-gradient-to-b p-2 transition-colors">
+                <div className="from-primary to-primary/50 text-primary-foreground group-hover:from-secondary group-hover:to-secondary/80 rounded-lg bg-linear-to-b p-2 transition-colors">
                   <PencilRuler className="h-6 w-6" />
                 </div>
                 <h2 className="text-card-foreground text-center text-xl font-medium text-balance">Tool Integration</h2>
@@ -115,9 +115,9 @@ export default function HomePage() {
                 Send your letters to your favorite tools. <br /> Like CifraClub, LaCuerda, etc.
               </p>
             </div>
-            <div className="hover:bg-secondary/20 flex flex-col items-center justify-center gap-y-2 border-b px-4 py-8 transition-colors last:border-b-0 lg:border-r md:[&:nth-child(2n+1)]:border-r lg:[&:nth-child(3n)]:border-r-0 lg:[&:nth-child(n+4)]:border-b-0 md:[&:nth-child(n+5)]:border-b-0">
+            <div className="hover:bg-secondary/20 flex flex-col items-center justify-center gap-y-2 border-b px-4 py-8 transition-colors last:border-b-0 lg:border-r md:nth-[2n+1]:border-r lg:nth-[3n]:border-r-0 lg:nth-[n+4]:border-b-0 md:nth-[n+5]:border-b-0">
               <div className="flex flex-col items-center gap-y-2">
-                <div className="from-primary to-primary/50 text-primary-foreground group-hover:from-secondary group-hover:to-secondary/80 rounded-lg bg-gradient-to-b p-2 transition-colors">
+                <div className="from-primary to-primary/50 text-primary-foreground group-hover:from-secondary group-hover:to-secondary/80 rounded-lg bg-linear-to-b p-2 transition-colors">
                   <MonitorSmartphone className="h-6 w-6" />
                 </div>
                 <h2 className="text-card-foreground text-center text-xl font-medium text-balance">Cross Platform</h2>
@@ -126,9 +126,9 @@ export default function HomePage() {
                 Available on all platforms. Windows, MacOS, Linux, iOS, Android.
               </p>
             </div>
-            <div className="hover:bg-secondary/20 flex flex-col items-center justify-center gap-y-2 border-b px-4 py-8 transition-colors last:border-b-0 lg:border-r md:[&:nth-child(2n+1)]:border-r lg:[&:nth-child(3n)]:border-r-0 lg:[&:nth-child(n+4)]:border-b-0 md:[&:nth-child(n+5)]:border-b-0">
+            <div className="hover:bg-secondary/20 flex flex-col items-center justify-center gap-y-2 border-b px-4 py-8 transition-colors last:border-b-0 lg:border-r md:nth-[2n+1]:border-r lg:nth-[3n]:border-r-0 lg:nth-[n+4]:border-b-0 md:nth-[n+5]:border-b-0">
               <div className="flex flex-col items-center gap-y-2">
-                <div className="from-primary to-primary/50 text-primary-foreground group-hover:from-secondary group-hover:to-secondary/80 rounded-lg bg-gradient-to-b p-2 transition-colors">
+                <div className="from-primary to-primary/50 text-primary-foreground group-hover:from-secondary group-hover:to-secondary/80 rounded-lg bg-linear-to-b p-2 transition-colors">
                   <FileText className="h-6 w-6" />
                 </div>
                 <h2 className="text-card-foreground text-center text-xl font-medium text-balance">Exportable</h2>
@@ -137,9 +137,9 @@ export default function HomePage() {
                 Design and customize your letters to fit your specific use case and requirements.
               </p>
             </div>
-            <div className="hover:bg-secondary/20 flex flex-col items-center justify-center gap-y-2 border-b px-4 py-8 transition-colors last:border-b-0 lg:border-r md:[&:nth-child(2n+1)]:border-r lg:[&:nth-child(3n)]:border-r-0 lg:[&:nth-child(n+4)]:border-b-0 md:[&:nth-child(n+5)]:border-b-0">
+            <div className="hover:bg-secondary/20 flex flex-col items-center justify-center gap-y-2 border-b px-4 py-8 transition-colors last:border-b-0 lg:border-r md:nth-[2n+1]:border-r lg:nth-[3n]:border-r-0 lg:nth-[n+4]:border-b-0 md:nth-[n+5 ]:border-b-0">
               <div className="flex flex-col items-center gap-y-2">
-                <div className="from-primary to-primary/50 text-primary-foreground group-hover:from-secondary group-hover:to-secondary/80 rounded-lg bg-gradient-to-b p-2 transition-colors">
+                <div className="from-primary to-primary/50 text-primary-foreground group-hover:from-secondary group-hover:to-secondary/80 rounded-lg bg-linear-to-b p-2 transition-colors">
                   <FileMusic className="h-6 w-6" />
                 </div>
                 <h2 className="text-card-foreground text-center text-xl font-medium text-balance">

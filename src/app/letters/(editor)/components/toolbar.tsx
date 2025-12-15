@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import {FloppyDisk, MagnifyingGlass, Metronome, MusicNote, NotePencil} from "@phosphor-icons/react";
-import {AnimatePresence, motion, MotionConfig} from "framer-motion";
-import {ArrowLeft, Redo, Undo} from "lucide-react";
-import {useEffect, useRef, useState} from "react";
-import {createPortal} from "react-dom";
-import useMeasure from "react-use-measure";
+import { FloppyDisk, MagnifyingGlass, Metronome, MusicNote, NotePencil } from '@phosphor-icons/react';
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { ArrowLeft, Redo, Undo } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import useMeasure from 'react-use-measure';
 
-import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {Label} from "@/components/ui/label";
-import {Separator} from "@/components/ui/separator";
-import useClickOutside from "@/hooks/use-click-outside";
-import {cn} from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import useClickOutside from '@/hooks/use-click-outside';
+import { cn } from '@/lib/utils';
 
 const transition = {
-  type: "spring",
+  type: 'spring',
   bounce: 0.1,
   duration: 0.25,
 };
@@ -37,8 +37,8 @@ function ItemButton({
     <button
       aria-label={ariaLabel}
       className={cn(
-        "group bg-sidebar-accent hover:bg-sidebar-primary/10 hover:text-sidebar-accent-foreground relative flex h-9 w-9 shrink-0 scale-100 appearance-none items-center justify-center rounded-lg transition-all select-none focus-visible:ring-2 active:scale-[0.98]",
-        active ? "bg-sidebar-border text-sidebar-primary" : "",
+        'group bg-sidebar-accent hover:bg-sidebar-primary/10 hover:text-sidebar-accent-foreground relative flex h-9 w-9 shrink-0 scale-100 appearance-none items-center justify-center rounded-lg transition-all select-none focus-visible:ring-2 active:scale-[0.98]',
+        active ? 'bg-sidebar-border text-sidebar-primary' : ''
       )}
       disabled={disabled}
       type="button"
@@ -52,13 +52,13 @@ function ItemButton({
 const ITEMS = [
   {
     id: 3,
-    label: "Save",
+    label: 'Save',
     title: <FloppyDisk className="h-5 w-5" />,
     content: <div className="flex flex-col space-y-4" />,
   },
   {
     id: 1,
-    label: "Text",
+    label: 'Text',
     title: <NotePencil className="h-5 w-5" />,
     content: (
       <div className="flex flex-row items-center justify-center space-x-4">
@@ -75,14 +75,14 @@ const ITEMS = [
   },
   {
     id: 2,
-    label: "Music",
+    label: 'Music',
     title: <MusicNote className="h-5 w-5" />,
     content: <div className="flex flex-col space-y-4" />,
   },
 
   {
     id: 4,
-    label: "Metronome",
+    label: 'Metronome',
     title: <Metronome className="h-5 w-5" />,
     content: (
       <div className="flex flex-col space-y-4">
@@ -108,20 +108,18 @@ export function ToolbarPortal() {
   const [docEnv, setDocEnv] = useState(false);
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
+    if (typeof document !== 'undefined') {
       setDocEnv(true);
     }
   }, []);
 
-  return docEnv
-    ? createPortal(<ToolbarExpandable />, document.getElementById("editor-content")!)
-    : null;
+  return docEnv ? createPortal(<ToolbarExpandable />, document.getElementById('editor-content')!) : null;
 }
 
 export function ToolbarExpandable() {
   const [active, setActive] = useState<number | null>(null);
-  const [contentRef, {height: heightContent}] = useMeasure();
-  const [menuRef, {width: widthContainer}] = useMeasure();
+  const [contentRef, { height: heightContent }] = useMeasure();
+  const [menuRef, { width: widthContainer }] = useMeasure();
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [maxWidth, setMaxWidth] = useState(0);
@@ -144,9 +142,9 @@ export function ToolbarExpandable() {
     <MotionConfig transition={transition}>
       <motion.div
         ref={ref}
-        animate={{opacity: 1, y: 0, x: "-50%"}}
+        animate={{ opacity: 1, y: 0, x: '-50%' }}
         className="absolute bottom-3 left-1/2 z-50 -translate-x-1/2 transform will-change-transform"
-        initial={{opacity: 0, y: 10, x: "-50%"}}
+        initial={{ opacity: 0, y: 10, x: '-50%' }}
       >
         <div className="border-sidebar-border bg-sidebar h-full w-full rounded-xl border">
           <div className="overflow-hidden">
@@ -154,28 +152,26 @@ export function ToolbarExpandable() {
               {isOpen ? (
                 <motion.div
                   key="content"
-                  animate={{height: heightContent || 0}}
-                  exit={{height: 0}}
-                  initial={{height: 0}}
+                  animate={{ height: heightContent || 0 }}
+                  exit={{ height: 0 }}
+                  initial={{ height: 0 }}
                   style={{
                     width: maxWidth,
                   }}
                 >
                   <div ref={contentRef} className="p-2">
-                    {ITEMS.map((item) => {
+                    {ITEMS.map(item => {
                       const isSelected = active === item.id;
 
                       return (
                         <motion.div
                           key={item.id}
-                          animate={{opacity: isSelected ? 1 : 0}}
+                          animate={{ opacity: isSelected ? 1 : 0 }}
                           className=""
-                          exit={{opacity: 0}}
-                          initial={{opacity: 0}}
+                          exit={{ opacity: 0 }}
+                          initial={{ opacity: 0 }}
                         >
-                          <div className={cn("px-2 pt-2 text-sm", isSelected ? "block" : "hidden")}>
-                            {item.content}
-                          </div>
+                          <div className={cn('px-2 pt-2 text-sm', isSelected ? 'block' : 'hidden')}>{item.content}</div>
                         </motion.div>
                       );
                     })}
@@ -185,7 +181,7 @@ export function ToolbarExpandable() {
             </AnimatePresence>
           </div>
           <div ref={menuRef} className="flex space-x-2 p-2">
-            {ITEMS.map((item) => (
+            {ITEMS.map(item => (
               <ItemButton
                 key={item.id}
                 active={active === item.id}
@@ -208,7 +204,7 @@ export function ToolbarExpandable() {
             <Separator className="my-auto h-4" orientation="vertical" />
             <motion.div
               animate={{
-                width: isSearching ? "300px" : "46px",
+                width: isSearching ? '300px' : '46px',
               }}
               initial={false}
             >

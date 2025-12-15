@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import {BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles} from "lucide-react";
-import {useTransition} from "react";
+import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from 'lucide-react';
+import { useTransition } from 'react';
 
-import {signOutAction} from "@/app/supabase/actions";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import { signOutAction } from '@/app/supabase/actions';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,9 +13,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar} from "@/components/ui/sidebar";
-import {Spinner} from "@/components/ui/spinner";
+} from '@/components/ui/dropdown-menu';
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
+import { Spinner } from '@/components/ui/spinner';
 
 export function NavUser({
   user,
@@ -26,7 +26,7 @@ export function NavUser({
     avatar: string;
   };
 }) {
-  const {isMobile} = useSidebar();
+  const { isMobile } = useSidebar();
 
   const [isLoggingOut, startLoggingOut] = useTransition();
 
@@ -53,7 +53,7 @@ export function NavUser({
           <DropdownMenuContent
             align="end"
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={isMobile ? 'bottom' : 'right'}
             sideOffset={4}
           >
             <DropdownMenuLabel className="p-0 font-normal">

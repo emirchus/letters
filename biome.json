@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.7/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -113,14 +113,7 @@
         "useNamespaceKeyword": "error"
       }
     },
-    "includes": [
-      "**",
-      "!node_modules",
-      "!.next",
-      "!out",
-      "!coverage",
-      "!.idea"
-    ]
+    "includes": ["**", "!node_modules", "!.next", "!out", "!coverage", "!.idea"]
   },
   "javascript": {
     "formatter": {
@@ -287,12 +280,7 @@
   },
   "overrides": [
     {
-      "includes": [
-        "**/*.ts",
-        "**/*.tsx",
-        "**/*.mts",
-        "**/*.cts"
-      ],
+      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
       "linter": {
         "rules": {
           "complexity": {
@@ -333,6 +321,21 @@
       "source": {
         "organizeImports": "on"
       }
+    }
+  },
+  "css": {
+    "assist": {
+      "enabled": true
+    },
+    "formatter": {
+      "enabled": true
+    },
+    "linter": {
+      "enabled": true
+    },
+    "parser": {
+      "tailwindDirectives": true,
+      "cssModules": true
     }
   }
 }
