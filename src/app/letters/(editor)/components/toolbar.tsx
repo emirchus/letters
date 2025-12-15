@@ -1,7 +1,7 @@
 'use client';
 
 import { FloppyDisk, MagnifyingGlass, Metronome, MusicNote, NotePencil } from '@phosphor-icons/react';
-import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion, Transition } from 'framer-motion';
 import { ArrowLeft, Redo, Undo } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -14,7 +14,7 @@ import { Separator } from '@/components/ui/separator';
 import useClickOutside from '@/hooks/use-click-outside';
 import { cn } from '@/lib/utils';
 
-const transition = {
+const transition: Transition = {
   type: 'spring',
   bounce: 0.1,
   duration: 0.25,

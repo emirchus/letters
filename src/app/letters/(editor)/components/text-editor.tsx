@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function ChordEditor({ readonly = false }: Props) {
-  const { text, setText, textareaRef, chords, setChord } = useEditor();
+  const { text, setText, chords } = useEditor();
   const [blocks, setBlocks] = useState<{ id: string; content: string }[]>(
     text.split('\n').map((line, index) => ({ id: `block-${index}`, content: line }))
   );
@@ -477,9 +477,7 @@ export function ChordEditor({ readonly = false }: Props) {
               }
               readonly={readonly}
               onRemove={() => {}}
-              onSelectChordAction={chord => {
-                setChord(absoluteIndex, chord);
-              }}
+              onSelectChordAction={() => {}}
             />
           );
         }
@@ -505,17 +503,6 @@ export function ChordEditor({ readonly = false }: Props) {
 
     return markers;
   };
-
-  const adjustTextareaHeight = useCallback(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  }, [textareaRef]);
-
-  useEffect(() => {
-    adjustTextareaHeight();
-  }, [adjustTextareaHeight]);
 
   return (
     <div className="relative h-full w-full font-mono text-base" dir="ltr">

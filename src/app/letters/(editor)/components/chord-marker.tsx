@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion, Transition } from 'framer-motion';
 import { ArrowLeftIcon } from 'lucide-react';
 import { memo, RefAttributes, useCallback, useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -9,7 +9,7 @@ import useClickOutside from '@/hooks/use-click-outside';
 import { Chord } from '@/interface/chord';
 import { ChordSelector } from './chord-selector';
 
-const TRANSITION = {
+const TRANSITION: Transition = {
   type: 'spring',
   bounce: 0.05,
   duration: 0.3,

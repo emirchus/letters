@@ -1,4 +1,4 @@
-import { createServerClient } from '@supabase/ssr';
+import { CookieOptionsWithName, createServerClient } from '@supabase/ssr';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
@@ -18,7 +18,7 @@ export const updateSession = async (request: NextRequest) => {
           getAll() {
             return request.cookies.getAll();
           },
-          setAll(cookiesToSet) {
+          setAll(cookiesToSet: { name: string; value: string; options: CookieOptionsWithName }[]) {
             cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
             response = NextResponse.next({
               request,
@@ -28,38 +28,27 @@ export const updateSession = async (request: NextRequest) => {
         },
       }
     );
-    const user = await supabase.auth.getUser();
 
-    const onboardingCompleted = user.data.user?.user_metadata?.onboarding_completed;
+    // const user = await supabase.auth.getUser();
 
-    const protectedRoutes: `/${string}`[] = [];
+    // const publicPaths: `/${string}`[] = ['/register', '/login', '/oauth/mercadopago', '/orders'];
+    // const nextUrl = request.nextUrl;
 
-    const onboardingRoute = '/letters/onboarding';
+    // if (!publicPaths.some(route => nextUrl.pathname.startsWith(route)) && user.error) {
+    //   if (!user.error) {
+    //     return NextResponse.redirect(new URL('/', request.url));
+    //   }
+    //   if (nextUrl.pathname.startsWith('/oauth/mercadopago')) {
+    //     const encodedUrl = encodeURIComponent(nextUrl.toString());
+    //     const nextUrlWithCallbackUrl = new URL(`/login`, request.url);
 
-    if (
-      !onboardingCompleted &&
-      request.nextUrl.pathname !== onboardingRoute &&
-      protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
-    ) {
-      return NextResponse.redirect(new URL('/letters/onboarding', request.url));
-    } else if (
-      onboardingCompleted &&
-      request.nextUrl.pathname === onboardingRoute &&
-      protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
-    ) {
-      return NextResponse.redirect(new URL('/letters', request.url));
-    }
+    //     nextUrlWithCallbackUrl.searchParams.set('callbackUrl', encodedUrl);
 
-    if (protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route)) && user.error) {
-      return NextResponse.redirect(new URL('/', request.url));
-    }
+    //     return NextResponse.redirect(nextUrlWithCallbackUrl);
+    //   }
 
-    if (
-      (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/signup')) &&
-      user.data.user
-    ) {
-      return NextResponse.redirect(new URL('/letters', request.url));
-    }
+    //   return NextResponse.redirect(new URL('/login', request.url));
+    // }
 
     return response;
   } catch (_e) {
