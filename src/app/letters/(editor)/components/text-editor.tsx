@@ -1,33 +1,30 @@
-"use client";
+'use client';
 
-import {useCallback, useEffect, useRef, useState} from "react";
-import React from "react";
-
-import {ChordMarker} from "./chord-marker";
-
-import {setCaretToEnd} from "@/lib/caret-utils";
-import {cn} from "@/lib/utils";
-import {useEditor} from "@/provider/editor-provider";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { setCaretToEnd } from '@/lib/caret-utils';
+import { cn } from '@/lib/utils';
+import { useEditor } from '@/provider/editor-provider';
+import { ChordMarker } from './chord-marker';
 
 interface Props {
   readonly?: boolean;
   className?: string;
 }
 
-export function ChordEditor({readonly = false}: Props) {
-  const {text, setText, textareaRef, chords, setChord} = useEditor();
-  const [blocks, setBlocks] = useState<{id: string; content: string}[]>(
-    text.split("\n").map((line, index) => ({id: `block-${index}`, content: line})),
+export function ChordEditor({ readonly = false }: Props) {
+  const { text, setText, textareaRef, chords, setChord } = useEditor();
+  const [blocks, setBlocks] = useState<{ id: string; content: string }[]>(
+    text.split('\n').map((line, index) => ({ id: `block-${index}`, content: line }))
   );
   const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setBlocks(text.split("\n").map((line, index) => ({id: `block-${index}`, content: line})));
+    setBlocks(text.split('\n').map((line, index) => ({ id: `block-${index}`, content: line })));
   }, [text]);
 
   // Manejador del teclado
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, index: number) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault();
       const currentBlock = blocks[index];
 
@@ -43,12 +40,12 @@ export function ChordEditor({readonly = false}: Props) {
         const after = currentBlock.content.slice(offset);
         const updatedBlocks = [...blocks];
 
-        updatedBlocks[index] = {...currentBlock, content: before};
+        updatedBlocks[index] = { ...currentBlock, content: before };
         updatedBlocks.splice(index + 1, 0, {
-          id: "block-" + Date.now(),
+          id: 'block-' + Date.now(),
           content: after,
         });
-        setText(updatedBlocks.map((block) => block.content).join("\n"));
+        setText(updatedBlocks.map(block => block.content).join('\n'));
 
         requestAnimationFrame(() => {
           const nextBlockElem = e.currentTarget.nextElementSibling;
@@ -62,11 +59,11 @@ export function ChordEditor({readonly = false}: Props) {
         const updatedBlocks = [...blocks];
 
         updatedBlocks.push({
-          id: "block-" + Date.now(),
-          content: "",
+          id: 'block-' + Date.now(),
+          content: '',
         });
         setBlocks(updatedBlocks);
-        setText(updatedBlocks.map((block) => block.content).join("\n"));
+        setText(updatedBlocks.map(block => block.content).join('\n'));
 
         requestAnimationFrame(() => {
           const nextBlockElem = e.currentTarget.nextElementSibling;
@@ -78,10 +75,10 @@ export function ChordEditor({readonly = false}: Props) {
       }
     }
 
-    if (e.key === "Backspace") {
+    if (e.key === 'Backspace') {
       const currentBlock = blocks[index];
 
-      if (currentBlock.content === "" && blocks.length > 1) {
+      if (currentBlock.content === '' && blocks.length > 1) {
         e.preventDefault();
         // Eliminar bloque vacío y mover el cursor al final del bloque anterior
         const updatedBlocks = [...blocks];
@@ -89,7 +86,7 @@ export function ChordEditor({readonly = false}: Props) {
         updatedBlocks.splice(index, 1);
         const prevBlock = updatedBlocks[index - 1];
 
-        setText(updatedBlocks.map((block) => block.content).join("\n"));
+        setText(updatedBlocks.map(block => block.content).join('\n'));
 
         requestAnimationFrame(() => {
           const prevBlockElem = document.getElementById(prevBlock.id);
@@ -99,7 +96,7 @@ export function ChordEditor({readonly = false}: Props) {
       }
     }
 
-    if (e.key === "a" && (e.ctrlKey || e.metaKey)) {
+    if (e.key === 'a' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
 
       // Seleccionar todo el contenido del editor
@@ -123,8 +120,8 @@ export function ChordEditor({readonly = false}: Props) {
   const handleInput = (e: React.FormEvent<HTMLDivElement>, index: number) => {
     const updatedBlocks = [...blocks];
 
-    updatedBlocks[index].content = e.currentTarget.textContent || "";
-    setText(updatedBlocks.map((block) => block.content).join("\n"));
+    updatedBlocks[index].content = e.currentTarget.textContent || '';
+    setText(updatedBlocks.map(block => block.content).join('\n'));
 
     // requestAnimationFrame(() => {
     //   setCaretToEnd(e.currentTarget);
@@ -132,13 +129,13 @@ export function ChordEditor({readonly = false}: Props) {
   };
 
   const renderChordMarkers = (line: string, lineIndex: number) => {
-    const words = line.split(" ");
+    const words = line.split(' ');
     const markers: React.ReactNode[] = [];
     let charCount = 0;
 
     words.forEach((word, wordIndex) => {
       if (word.trim().length > 0) {
-        const lineStart = text.split("\n").slice(0, lineIndex).join("\n").length + lineIndex;
+        const lineStart = text.split('\n').slice(0, lineIndex).join('\n').length + lineIndex;
         const wordMarkers: React.ReactNode[] = [];
         const numMarkers = Math.max(1, Math.floor(word.length / 2));
 
@@ -155,10 +152,10 @@ export function ChordEditor({readonly = false}: Props) {
               }
               readonly={readonly}
               onRemove={() => {}}
-              onSelectChordAction={(chord) => {
+              onSelectChordAction={chord => {
                 setChord(absoluteIndex, chord);
               }}
-            />,
+            />
           );
         }
 
@@ -169,12 +166,12 @@ export function ChordEditor({readonly = false}: Props) {
             style={{
               left: `${charCount}ch`,
               width: `${word.length}ch`,
-              top: "-.5rem",
-              pointerEvents: "none",
+              top: '-.5rem',
+              pointerEvents: 'none',
             }}
           >
             {wordMarkers}
-          </div>,
+          </div>
         );
       }
 
@@ -186,7 +183,7 @@ export function ChordEditor({readonly = false}: Props) {
 
   const adjustTextareaHeight = useCallback(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [textareaRef]);
@@ -200,7 +197,7 @@ export function ChordEditor({readonly = false}: Props) {
       <div ref={editorRef} className="relative h-full w-full font-mono text-base">
         {blocks.map((block, index) => (
           <React.Fragment key={block.id}>
-            <div className={cn("group absolute", readonly && "pointer-events-none")}>
+            <div className={cn('group absolute', readonly && 'pointer-events-none')}>
               {renderChordMarkers(block.content, index)}
               {/* <div className="pointer-events-none break-words whitespace-pre-wrap opacity-0">
                 {"\u00A0"}
@@ -211,8 +208,8 @@ export function ChordEditor({readonly = false}: Props) {
               suppressContentEditableWarning
               className="leading-[3rem] outline-hidden"
               id={block.id}
-              onInput={(e) => handleInput(e, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
+              onInput={e => handleInput(e, index)}
+              onKeyDown={e => handleKeyDown(e, index)}
             >
               {block.content}
             </div>

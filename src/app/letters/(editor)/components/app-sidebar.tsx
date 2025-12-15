@@ -1,14 +1,9 @@
-"use server";
+'use server';
 
-import {LetterText} from "lucide-react";
-import {RedirectType} from "next/navigation";
-import * as React from "react";
-
-import {NavMain} from "./nav-main";
-import {NavQuotaCard} from "./nav-quota-card";
-import {NavUser} from "./nav-user";
-
-import {getSongs} from "@/app/supabase/get-songs";
+import { LetterText } from 'lucide-react';
+import { RedirectType } from 'next/navigation';
+import * as React from 'react';
+import { getSongs } from '@/app/supabase/get-songs';
 import {
   Sidebar,
   SidebarContent,
@@ -19,23 +14,26 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSkeleton,
-} from "@/components/ui/sidebar";
-import {createClient} from "@/lib/supabase/server";
-import {encodedRedirect} from "@/lib/utils";
+} from '@/components/ui/sidebar';
+import { createClient } from '@/lib/supabase/server';
+import { encodedRedirect } from '@/lib/utils';
+import { NavMain } from './nav-main';
+import { NavQuotaCard } from './nav-quota-card';
+import { NavUser } from './nav-user';
 
-export async function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
-  const supabase = await createClient();
+export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  // const supabase = await createClient();
 
-  const {
-    data: {user},
-    error,
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: {user},
+  //   error,
+  // } = await supabase.auth.getUser();
 
-  if (error || !user) {
-    return encodedRedirect("error", "/login", error?.message ?? "Unknown error", {
-      type: RedirectType.replace,
-    });
-  }
+  // if (error || !user) {
+  //   return encodedRedirect("error", "/login", error?.message ?? "Unknown error", {
+  //     type: RedirectType.replace,
+  //   });
+  // }
 
   return (
     <Sidebar variant="inset" {...props}>
@@ -53,7 +51,7 @@ export async function AppSidebar({...props}: React.ComponentProps<typeof Sidebar
           <React.Suspense
             fallback={
               <SidebarMenu>
-                {Array.from({length: 5}).map((_, index) => (
+                {Array.from({ length: 5 }).map((_, index) => (
                   <SidebarMenuItem key={index}>
                     <SidebarMenuSkeleton className="bg-primary/50" />
                   </SidebarMenuItem>
@@ -71,9 +69,9 @@ export async function AppSidebar({...props}: React.ComponentProps<typeof Sidebar
         </div>
         <NavUser
           user={{
-            name: "Papurri13",
-            email: "",
-            avatar: user?.user_metadata?.avatar_url ?? "",
+            name: 'Papurri13',
+            email: '',
+            avatar: '',
           }}
         />
       </SidebarFooter>

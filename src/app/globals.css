@@ -1,3 +1,8 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
 :root {
   --background: oklch(0.9882 0.0069 88.6415);
   --foreground: oklch(0.2972 0 0);
@@ -31,9 +36,6 @@
   --sidebar-accent-foreground: oklch(0.2972 0 0);
   --sidebar-border: oklch(0.8104 0.0213 81.7716);
   --sidebar-ring: oklch(0.6729 0.0167 77.0203);
-  --font-sans: Alan Sans, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: Asul, ui-serif, serif;
-  --font-mono: "Indie Flower", cursive;
   --radius: 0.5rem;
   --shadow-x: 0px;
   --shadow-y: 2px;
@@ -86,9 +88,6 @@
   --sidebar-accent-foreground: oklch(0.9549 0.0076 61.4515);
   --sidebar-border: oklch(0.6074 0.0219 64.9360);
   --sidebar-ring: oklch(0.7263 0.0190 59.3735);
-  --font-sans: Alan Sans, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: Asul, ui-serif, serif;
-  --font-mono: "Indie Flower", cursive;
   --radius: 0.5rem;
   --shadow-x: 0px;
   --shadow-y: 2px;
@@ -157,4 +156,56 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 5px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50 font-sans;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-background text-foreground min-h-screen overscroll-none font-sans antialiased;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

@@ -29,7 +29,7 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <EditorContextProvider songTitle={song?.title}>
-      <div className="h-screen w-full flex-1 overflow-auto overflow-x-hidden">
+      <div className="h-screen flex- w-full flex-1 overflow-auto overflow-x-hidden">
         <header className="bg-background sticky top-0 z-30 flex h-16 shrink-0 items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator className="h-4" orientation="vertical" />

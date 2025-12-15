@@ -1,26 +1,24 @@
-import {PenTool} from "lucide-react";
-import Link from "next/link";
-import React from "react";
-
-import {TextScramble} from "./text-scramble";
-import {Button} from "./ui/button";
-
-import {createClient} from "@/lib/supabase/server";
+import { PenTool } from 'lucide-react';
+import Link from 'next/link';
+import React from 'react';
+import { createClient } from '@/lib/supabase/server';
+import { TextScramble } from './text-scramble';
+import { Button } from './ui/button';
 
 export async function StartWritingButton() {
   const supabase = await createClient();
 
-  const {data} = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getUser();
 
-  const url = data.user ? `/letters/` : "/login";
+  const url = data.user ? `/letters/` : '/login';
 
   return (
     <Button asChild>
-      <Link className="flex w-40 flex-row items-start justify-start" href={url}>
-        <TextScramble as="span" className="mx-auto">
+      <Link className="grid grid-cols-3 w-40 items-center justify-center" href={url}>
+        <TextScramble as="span" className="w-full col-span-2">
           Start Writing
         </TextScramble>
-        <PenTool className="ml-auto h-6 w-6" />
+        <PenTool className="size-6 col-span-1" />
       </Link>
     </Button>
   );
