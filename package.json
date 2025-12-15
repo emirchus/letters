@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -38,13 +38,13 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "framer-motion": "^12.4.1",
     "lucide-react": "^0.475.0",
-    "next": "15.1.6",
+    "next": "16.0.10",
     "next-themes": "^0.4.4",
     "next-view-transitions": "^0.3.4",
     "nuqs": "^2.3.2",
     "postcss": "^8.5.1",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "react-use-measure": "^2.1.7",
     "server-only": "^0.0.1",
     "supabase": "^2.9.6",
@@ -54,15 +54,16 @@
     "uuid": "^11.0.5"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.3.8",
     "@eslint/compat": "^1.2.6",
-    "@next/eslint-plugin-next": "15.1.6",
+    "@next/eslint-plugin-next": "16.0.10",
     "@types/node": "^22.13.1",
-    "@types/react": "19.0.8",
-    "@types/react-dom": "19.0.3",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
     "@vercel/style-guide": "^6.0.0",
     "babel-plugin-react-compiler": "19.0.0-beta-714736e-20250131",
     "eslint": "^9.20.0",
-    "eslint-config-next": "15.1.6",
+    "eslint-config-next": "16.0.10",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.3",
@@ -76,8 +77,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "19.0.8",
-      "@types/react-dom": "19.0.3"
+      "@types/react": "19.2.7",
+      "@types/react-dom": "19.2.3"
     },
     "onlyBuiltDependencies": [
       "sharp",
